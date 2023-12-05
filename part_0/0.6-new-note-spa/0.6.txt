@@ -1,0 +1,12 @@
+sequenceDiagram
+    participant browser
+    participant server 
+
+    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+    Note right of browser: The browser sends the new note data to the server
+    activate server
+    Note over server: The server processes this data \n and saves it to update the notes
+    server-->>browser: HTTP 201 Created {"message":"note created"}
+    deactivate server
+
+    Note right of browser: The browser updates the notes on the page without a full page reload

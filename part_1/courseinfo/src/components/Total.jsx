@@ -1,10 +1,11 @@
 const Total = (props) => {
+  const exercise1 = props.parts[0].exercises
+  const exercise2 = props.parts[1].exercises
+  const exercise3 = props.parts[2].exercises
+
   return (
     <footer>
-      <p>
-        Number of exercises{' '}
-        {props.exercises1 + props.exercises2 + props.exercises3}
-      </p>
+      <p>Number of exercises {exercise1 + exercise2 + exercise3}</p>
     </footer>
   )
 }

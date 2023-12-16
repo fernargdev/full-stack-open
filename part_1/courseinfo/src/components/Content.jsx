@@ -1,10 +1,9 @@
 import Part from './Part'
 
 const Content = (props) => {
-  const part1 = props.parts[0]
-  const part2 = props.parts[1]
-  const part3 = props.parts[2]
-
+  const part1 = props.course.parts[0]
+  const part2 = props.course.parts[1]
+  const part3 = props.course.parts[2]
   return (
     <main>
       <Part part={part1} />

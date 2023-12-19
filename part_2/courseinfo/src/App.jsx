@@ -1,5 +1,7 @@
-import Course from './components/Course'
 import Header from './components/Header'
+
+// Execise 2.5
+import Course from './components/Course'
 
 const App = () => {
   const courses = [

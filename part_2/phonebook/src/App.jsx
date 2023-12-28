@@ -6,6 +6,11 @@ import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
 
+// 2.15: Guía telefónica paso7
+// Regresemos a nuestra aplicación de agenda telefónica.
+// Actualmente, los números que se agregan a la agenda no
+// se guardan en un servidor backend. Arregla esta situación.
+
 const App = () => {
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
@@ -13,9 +18,7 @@ const App = () => {
   const [filter, setFilter] = useState('')
 
   useEffect(() => {
-    console.log('effect')
     axios.get('http://localhost:3001/persons').then((response) => {
-      console.log('promise fulfilled')
       setPersons(response.data)
     })
   }, [])
@@ -40,9 +43,14 @@ const App = () => {
       number: newNumber,
     }
 
-    setPersons(persons.concat(personObject))
-    setNewName('')
-    setNewNumber('')
+    axios
+      .post('http://localhost:3001/persons', personObject)
+      .then((response) => {
+        setPersons(persons.concat(response.data))
+        setNewName('')
+        setNewNumber('')
+        console.log(response)
+      })
   }
 
   return (

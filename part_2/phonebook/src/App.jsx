@@ -1,15 +1,10 @@
 import { useEffect, useState } from 'react'
 
-import axios from 'axios'
+import personService from './services/persons'
 
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
-
-// 2.15: Guía telefónica paso7
-// Regresemos a nuestra aplicación de agenda telefónica.
-// Actualmente, los números que se agregan a la agenda no
-// se guardan en un servidor backend. Arregla esta situación.
 
 const App = () => {
   const [persons, setPersons] = useState([])
@@ -18,9 +13,14 @@ const App = () => {
   const [filter, setFilter] = useState('')
 
   useEffect(() => {
-    axios.get('http://localhost:3001/persons').then((response) => {
-      setPersons(response.data)
-    })
+    personService
+      .getAll()
+      .then((initialPersons) => {
+        setPersons(initialPersons)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }, [])
 
   const handleNameChange = (event) => setNewName(event.target.value)
@@ -43,13 +43,15 @@ const App = () => {
       number: newNumber,
     }
 
-    axios
-      .post('http://localhost:3001/persons', personObject)
-      .then((response) => {
-        setPersons(persons.concat(response.data))
+    personService
+      .create(personObject)
+      .then((returnedPerson) => {
+        setPersons(persons.concat(returnedPerson))
         setNewName('')
         setNewNumber('')
-        console.log(response)
+      })
+      .catch((error) => {
+        console.log(error)
       })
   }
 
@@ -80,3 +82,9 @@ const App = () => {
 }
 
 export default App
+
+// 2.16: Guía telefónica paso 8
+// Extraiga el código que maneja la comunicación
+// con el backend en su propio módulo siguiendo
+// el ejemplo que se mostró anteriormente en
+// esta parte del material del curso.

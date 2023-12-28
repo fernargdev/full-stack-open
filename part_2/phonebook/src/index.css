@@ -1,0 +1,14 @@
+.btn-delete {
+  margin-left: 3%;
+  border-radius: 30px;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  -ms-border-radius: 30px;
+  -o-border-radius: 30px;
+  cursor: pointer;
+  border: 2px solid gray;
+}
+
+.btn-delete:hover {
+  background-color: red;
+}

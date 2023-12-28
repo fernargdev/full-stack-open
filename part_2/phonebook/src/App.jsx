@@ -55,6 +55,19 @@ const App = () => {
       })
   }
 
+  const deletePerson = (id, name) => {
+    if (window.confirm(`Delete ${name} ?`)) {
+      personService
+        .eliminate(id)
+        .then(() => {
+          setPersons(persons.filter((person) => person.id !== id))
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    }
+  }
+
   return (
     <>
       <header>
@@ -75,7 +88,11 @@ const App = () => {
 
       <footer>
         <h2>Numbers</h2>
-        <Persons persons={persons} filter={filter} />
+        <Persons
+          persons={persons}
+          filter={filter}
+          deletePerson={deletePerson}
+        />
       </footer>
     </>
   )
@@ -83,8 +100,20 @@ const App = () => {
 
 export default App
 
-// 2.16: Guía telefónica paso 8
-// Extraiga el código que maneja la comunicación
-// con el backend en su propio módulo siguiendo
-// el ejemplo que se mostró anteriormente en
-// esta parte del material del curso.
+// 2.17: Guía telefónica Paso9
+
+// Permita que los usuarios eliminen entradas de la agenda.
+// La eliminación se puede realizar a través de un botón dedicado
+// para cada persona en la lista de la agenda. Puede confirmar
+// la acción del usuario utilizando el método window.confirm:
+
+// El recurso asociado para una persona en el backend se puede eliminar
+// haciendo una solicitud HTTP DELETE a la URL del recurso. Si estamos eliminando,
+// por ejemplo, una persona que tiene el id 2, tendríamos que hacer una solicitud
+// HTTP DELETE a la URL localhost:3001/persons/2. No se envían datos con la solicitud.
+
+// Puede realizar una solicitud HTTP DELETE con la librería axios de la misma
+// manera que hacemos todas las demás solicitudes.
+
+// NB: No puede usar el nombre delete para una variable porque es una palabra reservada
+// en JavaScript. Por ejemplo, lo siguiente no es posible:

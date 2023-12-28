@@ -1,22 +1,9 @@
 import { useEffect, useState } from 'react'
 
 import axios from 'axios'
+
 import CountryDetails from './components/CountryDetails'
 import CountryList from './components/CountryList'
-// import CountryList from './components/CountryList'
-
-// const CountryList = ({ countriesToShow, handleShowClick }) => {
-//   return (
-//     <ul>
-//       {countriesToShow.map((country) => (
-//         <li key={country.name.common}>
-//           {country.name.common}
-//           <button onClick={() => handleShowClick(country)}>show</button>
-//         </li>
-//       ))}
-//     </ul>
-//   )
-// }
 
 const App = () => {
   const [countries, setCountries] = useState([])
@@ -24,16 +11,12 @@ const App = () => {
   const [selectedCountry, setSelectedCountry] = useState(null)
 
   useEffect(() => {
-    console.log('Effect')
-
     axios
       .get('https://studies.cs.helsinki.fi/restcountries/api/all')
       .then((response) => {
         setCountries(response.data)
-        console.log('Promesa exitosa')
       })
       .catch((error) => {
-        console.log('Promesa fallida')
         console.log(error)
       })
   }, [])
@@ -80,5 +63,3 @@ const App = () => {
 }
 
 export default App
-
-// TODO: Tiene algun bug de logica la funcionalidad de mostrar country selected

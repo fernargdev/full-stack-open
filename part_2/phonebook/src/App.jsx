@@ -12,7 +12,10 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter] = useState('')
-  const [message, setMessage] = useState(null)
+  const [message, setMessage] = useState({
+    message: null,
+    isError: false,
+  })
 
   useEffect(() => {
     personService
@@ -22,6 +25,14 @@ const App = () => {
       })
       .catch((error) => {
         console.log(error)
+        setMessage({
+          message: `People could not be obtained`,
+          isError: true,
+        })
+
+        setTimeout(() => {
+          setMessage({ message: null, isError: false })
+        }, 5000)
       })
   }, [])
 
@@ -48,13 +59,22 @@ const App = () => {
                 person.id !== existingPerson.id ? person : returnedPerson
               )
             )
-            setMessage(`Update ${returnedPerson.name}`)
-            setTimeout(() => {
-              setMessage(null)
-            }, 5000)
+            setMessage({
+              message: `Update ${returnedPerson.name}`,
+            })
           })
           .catch((error) => {
             console.log(error)
+            setMessage({
+              message: `Information of ${newName} has already been removed from server`,
+              isError: true,
+            })
+            setPersons(persons.filter((p) => p.id !== existingPerson.id))
+          })
+          .finally(() => {
+            setTimeout(() => {
+              setMessage({ message: null, isError: false })
+            }, 5000)
           })
       }
     } else {
@@ -67,13 +87,21 @@ const App = () => {
         .create(personObject)
         .then((returnedPerson) => {
           setPersons(persons.concat(returnedPerson))
-          setMessage(`Added ${returnedPerson.name}`)
-          setTimeout(() => {
-            setMessage(null)
-          }, 5000)
+          setMessage({
+            message: `Added ${returnedPerson.name}`,
+          })
         })
         .catch((error) => {
           console.log(error)
+          setMessage({
+            message: `Could not be added ${newName}`,
+            isError: true,
+          })
+        })
+        .finally(() => {
+          setTimeout(() => {
+            setMessage({ message: null, isError: false })
+          }, 5000)
         })
     }
 
@@ -87,9 +115,21 @@ const App = () => {
         .eliminate(id)
         .then(() => {
           setPersons(persons.filter((person) => person.id !== id))
+          setMessage({
+            message: `Delete ${name}`,
+          })
         })
         .catch((error) => {
           console.log(error)
+          setMessage({
+            message: `Information of ${name} has already been removed from server`,
+            isError: true,
+          })
+        })
+        .finally(() => {
+          setTimeout(() => {
+            setMessage({ message: null, isError: false })
+          }, 5000)
         })
     }
   }
@@ -98,7 +138,7 @@ const App = () => {
     <>
       <header>
         <h1>Phonebook</h1>
-        <Notification message={message} />
+        <Notification isError={message.isError} message={message.message} />
 
         <Filter
           filter={filter}

@@ -67,6 +67,9 @@ app.post('/api/persons', (request, response) => {
   if (!body.number)
     return response.status(400).json({ error: 'number missing' })
 
+  if (persons.find((person) => person.name === body.name))
+    return response.status(400).json({ error: 'name must be unique' })
+
   const person = {
     id: generateRandomId(),
     name: body.name,
@@ -90,13 +93,14 @@ app.listen(PORT, () => {
   console.log(`Server running on port: http://localhost:${PORT}`)
 })
 
-// 3.5: Paso 5 del backend de la agenda telefónica
-// Expanda el backend para que se puedan agregar nuevas entradas
-// de la agenda telefónica realizando solicitudes HTTP POST a
-// la dirección http://localhost:3001/api/persons .
+// 3.6: Paso 6 del backend de la agenda telefónica
+// Implementar manejo de errores para crear nuevas entradas.
+// La solicitud no podrá prosperar si:
 
-// Genere una nueva identificación para la entrada
-// de la agenda telefónica con la función Math.random .
-// Utilice un rango lo suficientemente grande para sus
-// valores aleatorios para que la probabilidad de crear
-// identificadores duplicados sea pequeña. ✅
+// Falta el nombre o el número ✅
+// El nombre ya existe en la agenda. ✅
+
+// Responda a solicitudes como estas con el código de estado
+// apropiado y también envíe información que explique el motivo del error, por ejemplo:
+
+// { error: 'name must be unique' }

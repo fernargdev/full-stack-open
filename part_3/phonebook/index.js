@@ -57,6 +57,27 @@ app.get('/api/persons/:id', (request, response) => {
   }
 })
 
+const generateRandomId = () => Math.floor(Math.random() * 10000) + 1
+
+app.post('/api/persons', (request, response) => {
+  const body = request.body
+
+  if (!body.name) return response.status(400).json({ error: 'name missing' })
+
+  if (!body.number)
+    return response.status(400).json({ error: 'number missing' })
+
+  const person = {
+    id: generateRandomId(),
+    name: body.name,
+    number: body.number,
+  }
+
+  persons = persons.concat(person)
+
+  response.json(person)
+})
+
 app.delete('/api/persons/:id', (request, response) => {
   const id = Number(request.params.id)
   persons = persons.filter((person) => person.id !== id)
@@ -69,11 +90,13 @@ app.listen(PORT, () => {
   console.log(`Server running on port: http://localhost:${PORT}`)
 })
 
-// 3.4: Paso 4 del backend de la agenda telefónica
-// Implementar una funcionalidad que haga posible eliminar
-// una sola entrada de la agenda telefónica realizando una
-// solicitud DELETE HTTP a la URL única de esa entrada de
-// la agenda telefónica.
+// 3.5: Paso 5 del backend de la agenda telefónica
+// Expanda el backend para que se puedan agregar nuevas entradas
+// de la agenda telefónica realizando solicitudes HTTP POST a
+// la dirección http://localhost:3001/api/persons .
 
-// Pruebe que su funcionalidad funcione con
-// Postman o con el cliente REST de Visual Studio Code.
+// Genere una nueva identificación para la entrada
+// de la agenda telefónica con la función Math.random .
+// Utilice un rango lo suficientemente grande para sus
+// valores aleatorios para que la probabilidad de crear
+// identificadores duplicados sea pequeña. ✅

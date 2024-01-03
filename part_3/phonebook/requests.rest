@@ -1,5 +1,14 @@
-### GET ALL NOTES
+### GET ALL PERSONS
 GET http://localhost:3001/api/persons
 
-### DELETE A SINGLE NOTE
+### DELETE A SINGLE PERSON
 DELETE http://localhost:3001/api/persons/1
+
+### CREATE NEW PERSON
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+    "name": "Fernando Angel Rodriguez Gonzalez",
+    "number": "+53 58450004"
+}

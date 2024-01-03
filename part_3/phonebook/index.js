@@ -57,16 +57,23 @@ app.get('/api/persons/:id', (request, response) => {
   }
 })
 
+app.delete('/api/persons/:id', (request, response) => {
+  const id = Number(request.params.id)
+  persons = persons.filter((person) => person.id !== id)
+
+  response.status(204).end()
+})
+
 const PORT = 3001
 app.listen(PORT, () => {
   console.log(`Server running on port: http://localhost:${PORT}`)
 })
 
-// 3.3: Paso 3 del backend de la agenda telefónica
-// Implemente la funcionalidad para mostrar la información de
-// una única entrada de la agenda telefónica. La URL para
-// obtener los datos de una persona con ID 5 debe ser
-// http://localhost:3001/api/persons/5
+// 3.4: Paso 4 del backend de la agenda telefónica
+// Implementar una funcionalidad que haga posible eliminar
+// una sola entrada de la agenda telefónica realizando una
+// solicitud DELETE HTTP a la URL única de esa entrada de
+// la agenda telefónica.
 
-// Si no se encuentra una entrada para la identificación dada,
-// el servidor debe responder con el código de estado apropiado.
+// Pruebe que su funcionalidad funcione con
+// Postman o con el cliente REST de Visual Studio Code.

@@ -1,2 +1,5 @@
 ### GET ALL NOTES
 GET http://localhost:3001/api/persons
+
+### DELETE A SINGLE NOTE
+DELETE http://localhost:3001/api/persons/1

@@ -1,7 +1,9 @@
 const express = require('express')
+const morgan = require('morgan')
 const app = express()
 
 app.use(express.json())
+app.use(morgan('tiny'))
 
 let persons = [
   {
@@ -27,7 +29,7 @@ let persons = [
 ]
 
 app.get('/', (request, response) => {
-  response.send('<h1> Hello World! </h1>')
+  response.send('<h1>Phonebook API</h1>')
 })
 
 app.get('/info', (request, response) => {
@@ -93,14 +95,20 @@ app.listen(PORT, () => {
   console.log(`Server running on port: http://localhost:${PORT}`)
 })
 
-// 3.6: Paso 6 del backend de la agenda telefónica
-// Implementar manejo de errores para crear nuevas entradas.
-// La solicitud no podrá prosperar si:
+// 3.7: Paso 7 del backend de la agenda telefónica
+// Agregue el middleware morgan a su aplicación para iniciar sesión.
+// Configúrelo para registrar mensajes en su consola según
+// la tiny configuración.
 
-// Falta el nombre o el número ✅
-// El nombre ya existe en la agenda. ✅
+// La documentación de Morgan no es la mejor y
+// es posible que tengas que dedicar algo de tiempo
+// a descubrir cómo configurarla correctamente.
+// Sin embargo, la mayor parte de la documentación
+// del mundo pertenece a la misma categoría, por lo que
+// es bueno aprender a descifrar e interpretar documentación
+// críptica en cualquier caso.
 
-// Responda a solicitudes como estas con el código de estado
-// apropiado y también envíe información que explique el motivo del error, por ejemplo:
-
-// { error: 'name must be unique' }
+// Morgan se instala como todas las demás bibliotecas con el
+// comando npm install . La puesta en uso de Morgan ocurre de
+// la misma manera que la configuración de cualquier otro middleware
+// mediante el comando app.use .

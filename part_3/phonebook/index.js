@@ -3,7 +3,12 @@ const morgan = require('morgan')
 const app = express()
 
 app.use(express.json())
-app.use(morgan('tiny'))
+
+morgan.token('body', (request) => JSON.stringify(request.body))
+
+app.use(
+  morgan(':method :url :status :res[content-length] - :response-time ms :body')
+)
 
 let persons = [
   {
@@ -95,20 +100,24 @@ app.listen(PORT, () => {
   console.log(`Server running on port: http://localhost:${PORT}`)
 })
 
-// 3.7: Paso 7 del backend de la agenda telefónica
-// Agregue el middleware morgan a su aplicación para iniciar sesión.
-// Configúrelo para registrar mensajes en su consola según
-// la tiny configuración.
+// 3.8*: Paso 8 del backend de la agenda telefónica
+// Configure Morgan para que también muestre los datos
+// enviados en las solicitudes HTTP POST:
 
-// La documentación de Morgan no es la mejor y
-// es posible que tengas que dedicar algo de tiempo
-// a descubrir cómo configurarla correctamente.
-// Sin embargo, la mayor parte de la documentación
-// del mundo pertenece a la misma categoría, por lo que
-// es bueno aprender a descifrar e interpretar documentación
-// críptica en cualquier caso.
+// Tenga en cuenta que registrar datos incluso en la consola
+// puede ser peligroso ya que puede contener datos confidenciales
+// y puede violar la ley de privacidad local (por ejemplo, GDPR en la UE) o
+// el estándar comercial. En este ejercicio, no tiene que preocuparse por
+// cuestiones de privacidad, pero en la práctica, intente no registrar
+// ningún dato confidencial.
 
-// Morgan se instala como todas las demás bibliotecas con el
-// comando npm install . La puesta en uso de Morgan ocurre de
-// la misma manera que la configuración de cualquier otro middleware
-// mediante el comando app.use .
+// Este ejercicio puede resultar bastante desafiante, aunque
+// la solución no requiere mucho código.
+
+// Este ejercicio se puede completar de diferentes maneras.
+// Una de las posibles soluciones utiliza estas dos técnicas:
+
+// creando nuevos tokens:
+// https://github.com/expressjs/morgan#creating-new-tokens
+// JSON.stringify:
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify

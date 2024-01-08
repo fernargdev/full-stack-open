@@ -1,0 +1,14 @@
+### GET ALL PERSONS
+GET https://phonebook-backend-gqub.onrender.com/api/persons
+
+### DELETE A SINGLE PERSON
+DELETE https://phonebook-backend-gqub.onrender.com/api/persons/1
+
+### CREATE NEW PERSON
+POST https://phonebook-backend-gqub.onrender.com/api/persons
+Content-Type: application/json
+
+{
+    "name": "Fernando Angel Rodriguez Gonzalez",
+    "number": "+53 58450004"
+}

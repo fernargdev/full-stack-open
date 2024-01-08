@@ -1,0 +1,33 @@
+.btn-delete,
+.btn-add {
+  border-radius: 30px;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  -ms-border-radius: 30px;
+  -o-border-radius: 30px;
+  cursor: pointer;
+  border: 2px solid gray;
+}
+
+.btn-delete:hover {
+  background-color: red;
+}
+
+.btn-add:hover {
+  background-color: green;
+}
+
+.error,
+.note {
+  color: red;
+  background: lightgrey;
+  font-size: 20px;
+  border-style: solid;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.note {
+  color: green;
+}

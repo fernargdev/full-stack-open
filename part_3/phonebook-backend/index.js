@@ -5,7 +5,12 @@ const app = express()
 
 morgan.token('body', (request) => JSON.stringify(request.body))
 
+const uknownEnpoint = (request, response) => {
+  response.status(404).send({ error: 'unknown endpoint' })
+}
+
 app.use(cors())
+app.use(express.static('dist'))
 app.use(express.json())
 app.use(
   morgan(':method :url :status :res[content-length] - :response-time ms :body')
@@ -95,6 +100,8 @@ app.delete('/api/persons/:id', (request, response) => {
 
   response.status(204).end()
 })
+
+app.use(uknownEnpoint)
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {

@@ -1,6 +1,11 @@
+require('dotenv').config()
+
 const express = require('express')
 const cors = require('cors')
 const morgan = require('morgan')
+
+const Person = require('./models/person')
+
 const app = express()
 
 morgan.token('body', (request) => JSON.stringify(request.body))
@@ -56,7 +61,9 @@ app.get('/info', (request, response) => {
 })
 
 app.get('/api/persons', (request, response) => {
-  response.json(persons)
+  Person.find({}).then((persons) => {
+    response.json(persons)
+  })
 })
 
 app.get('/api/persons/:id', (request, response) => {
@@ -69,6 +76,8 @@ app.get('/api/persons/:id', (request, response) => {
     response.status(404).end()
   }
 })
+
+app.get('/api/persons', (request, response) => {})
 
 const generateRandomId = () => Math.floor(Math.random() * 10000) + 1
 

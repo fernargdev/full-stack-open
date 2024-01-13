@@ -14,6 +14,16 @@ const uknownEnpoint = (request, response) => {
   response.status(404).send({ error: 'unknown endpoint' })
 }
 
+const errorHandler = (error, request, response, next) => {
+  console.error(error.message)
+
+  if (error.name === 'CastError') {
+    return response.status(400).send({ error: 'malformatted id' })
+  }
+
+  next(error)
+}
+
 app.use(cors())
 app.use(express.static('dist'))
 app.use(express.json())
@@ -108,6 +118,7 @@ app.delete('/api/persons/:id', (request, response, next) => {
 })
 
 app.use(uknownEnpoint)
+app.use(errorHandler)
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {

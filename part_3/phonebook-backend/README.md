@@ -7,7 +7,3 @@ With the objective of deploying the backend of the phone book in [render](https:
 ## URL:
 
 - Deployment in render: https://phonebook-backend-gqub.onrender.com
-
-## Notes:
-
-- It seems that the functionality of updating phone numbers does not work due to problems with the server because json server was working

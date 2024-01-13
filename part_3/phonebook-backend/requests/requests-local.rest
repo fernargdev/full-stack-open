@@ -1,10 +1,16 @@
-### GET ALL PERSONS
+### GET uknownEnpoint
+GET http://localhost:3001/abcde
+
+### GET /info
+GET http://localhost:3001/info
+
+### GET /api/persons
 GET http://localhost:3001/api/persons
 
-### DELETE A SINGLE PERSON
-DELETE http://localhost:3001/api/persons/1
+### GET /api/persons/:id
+GET http://localhost:3001//api/persons/65a139f795e537940bb2ec7f
 
-### CREATE NEW PERSON
+### POST /api/persons
 POST http://localhost:3001/api/persons
 Content-Type: application/json
 
@@ -12,3 +18,16 @@ Content-Type: application/json
     "name": "Fernando Angel Rodriguez Gonzalez",
     "number": "+53 58450004"
 }
+
+### DELETE /api/persons/:id
+DELETE http://localhost:3001/api/persons/65a139f795e537940bb2ec7f
+
+### PUT /api/persons/:id
+PUT http://localhost:3001/api/persons/65a13a0695e537940bb2ec81
+Content-Type: application/json
+
+{
+    "name": "Update 5",
+    "number": "555"
+}
+

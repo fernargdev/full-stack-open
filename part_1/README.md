@@ -8,12 +8,3 @@ a. [Introduction to React](https://fullstackopen.com/en/part1/introduction_to_re
 b. [JavaScript](https://fullstackopen.com/en/part1/java_script)  
 c. [Component state, event handlers](https://fullstackopen.com/en/part1/component_state_event_handlers)  
 d. [A more complex state, debugging React apps](https://fullstackopen.com/en/part1/a_more_complex_state_debugging_react_apps)
-
-## Valuable information
-
-- [courses-egghead](https://egghead.io/)
-- [javascript-mdn](https://developer.mozilla.org/es/docs/Web/JavaScript)
-- [javascript-overview](https://developer.mozilla.org/es/docs/Web/JavaScript/Language_overview)
-- [you-dont-know-js](https://github.com/getify/You-Dont-Know-JS)
-- [javascript-info](https://es.javascript.info/)
-- [tutorial-tic-tac-toe](https://es.react.dev/learn/tutorial-tic-tac-toe)

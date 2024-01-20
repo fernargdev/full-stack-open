@@ -80,11 +80,10 @@ app.post('/api/persons', (request, response, next) => {
   if (!body.number)
     return response.status(400).json({ error: 'number missing' })
 
-  Person.findByIdAndUpdate(
-    request.params.id,
-    { name, number },
-    { new: true, runValidators: true, context: 'query' }
-  )
+  const person = new Person({
+    name: body.name,
+    number: body.number,
+  })
 
   person
     .save()
@@ -96,7 +95,7 @@ app.post('/api/persons', (request, response, next) => {
 
 app.delete('/api/persons/:id', (request, response, next) => {
   Person.findByIdAndDelete(request.params.id)
-    .then((result) => {
+    .then(() => {
       response.status(204).end()
     })
     .catch((error) => next(error))

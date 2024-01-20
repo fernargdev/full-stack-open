@@ -66,10 +66,9 @@ const App = () => {
           .catch((error) => {
             console.log(error)
             setMessage({
-              message: `Information of ${newName} has already been removed from server`,
+              message: error.response.data.error,
               isError: true,
             })
-            setPersons(persons.filter((p) => p.id !== existingPerson.id))
           })
           .finally(() => {
             setTimeout(() => {
@@ -94,7 +93,7 @@ const App = () => {
         .catch((error) => {
           console.log(error)
           setMessage({
-            message: `Could not be added ${newName}`,
+            message: error.response.data.error,
             isError: true,
           })
         })

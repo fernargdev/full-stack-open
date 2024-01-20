@@ -10,7 +10,7 @@ mongoose
   .connect(url, {
     serverSelectionTimeoutMS: 100000000,
   })
-  .then((result) => {
+  .then(() => {
     console.log('connected to MongoDB')
   })
   .catch((error) => {

@@ -1,0 +1,13 @@
+### GET /api/blogs
+GET http://localhost:3003/api/blogs
+
+### POST /api/persons
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+{
+  "title": "Prueba 4",
+  "author": "Fernando 4",
+  "url": "https://github.com/fernargdev",
+  "likes": 104
+}

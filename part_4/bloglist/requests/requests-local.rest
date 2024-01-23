@@ -6,8 +6,8 @@ POST http://localhost:3003/api/blogs
 Content-Type: application/json
 
 {
-  "title": "Prueba 4",
-  "author": "Fernando 4",
+  "title": "Prueba 5",
+  "author": "Fernando 5",
   "url": "https://github.com/fernargdev",
-  "likes": 104
+  "likes": 105
 }

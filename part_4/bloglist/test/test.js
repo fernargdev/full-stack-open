@@ -76,3 +76,21 @@ describe('total likes', () => {
     expect(result).toBe(36)
   })
 })
+
+// Unit test for favorite blog: returns the blog with the most likes
+describe('favorite blog', () => {
+  test('of empty list is null', () => {
+    const result = listHelper.favoriteBlog([])
+    expect(result).toEqual(null)
+  })
+
+  test('when list has only one blog equals that blog', () => {
+    const result = listHelper.favoriteBlog([blogs[0]])
+    expect(result).toEqual(blogs[0])
+  })
+
+  test('of a bigger list is calculated right', () => {
+    const result = listHelper.favoriteBlog(blogs)
+    expect(result).toEqual(blogs[2])
+  })
+})

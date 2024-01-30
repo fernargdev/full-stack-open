@@ -118,3 +118,27 @@ describe('most blogs', () => {
     })
   })
 })
+
+// Unit test for most likes: returns the author with the most likes
+describe('most likes', () => {
+  test('of empty list is null', () => {
+    const result = listHelper.mostLikes([])
+    expect(result).toEqual(null)
+  })
+
+  test('when list has only one blog equals that author', () => {
+    const result = listHelper.mostLikes([blogs[0]])
+    expect(result).toEqual({
+      author: blogs[0].author,
+      likes: blogs[0].likes,
+    })
+  })
+
+  test('of a bigger list is calculated right', () => {
+    const result = listHelper.mostLikes(blogs)
+    expect(result).toEqual({
+      author: 'Edsger W. Dijkstra',
+      likes: 17,
+    })
+  })
+})

@@ -4,10 +4,12 @@
   "description": "bloglist app backend",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js",
+    "start": "set NODE_ENV=production && node index.js",
+    "dev": "set NODE_ENV=development && nodemon index.js",
     "lint": "eslint .",
-    "test": "jest --verbose"
+    "test": "set NODE_ENV=test && jest --verbose --runInBand",
+    "test:integration": "set NODE_ENV=test && jest --verbose --runInBand tests/blog_api.test.js",
+    "test:unit": "set NODE_ENV=test && jest --verbose --runInBand tests/unit.test.js"
   },
   "author": "Fernando Angel Rodriguez Gonzalez",
   "license": "ISC",
@@ -21,7 +23,8 @@
     "eslint": "^8.56.0",
     "jest": "^29.7.0",
     "lodash": "^4.17.21",
-    "nodemon": "^3.0.3"
+    "nodemon": "^3.0.3",
+    "supertest": "^6.3.4"
   },
   "jest": {
     "testEnvironment": "node"

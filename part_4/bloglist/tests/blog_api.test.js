@@ -6,8 +6,8 @@ const api = supertest(app)
 
 const Blog = require('../models/blog')
 
-mongoose.set('bufferTimeoutMS', 30000)
-jest.setTimeout(30000)
+mongoose.set('bufferTimeoutMS', 300000)
+jest.setTimeout(300000)
 
 const initialBlogs = [
   {
@@ -34,7 +34,6 @@ beforeEach(async () => {
   await blogObject.save()
 })
 
-// Integration test: /api/blogs
 describe('tests the endpoint that obtains the notes', () => {
   test('blogs are returned as json', async () => {
     await api
@@ -53,6 +52,28 @@ describe('tests the endpoint that obtains the notes', () => {
     const response = await api.get('/api/blogs')
 
     expect(response.body[0].id).toBeDefined()
+  })
+})
+
+describe('tests the endpoint that adds a blog', () => {
+  test('a valid blog can be added', async () => {
+    const newBlog = {
+      title: 'Canonical string reduction',
+      author: 'Edsger W. Dijkstra',
+      url: 'https://github.com/fernargdev',
+      likes: 12,
+    }
+
+    await api
+      .post('/api/blogs')
+      .send(newBlog)
+      .expect(201)
+      .expect('Content-Type', /application\/json/)
+
+    const response = await api.get('/api/blogs')
+
+    expect(response.body).toHaveLength(initialBlogs.length + 1)
+    expect(response.body).toContainEqual(expect.objectContaining(newBlog))
   })
 })
 

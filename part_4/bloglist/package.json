@@ -8,8 +8,8 @@
     "dev": "set NODE_ENV=development && nodemon index.js",
     "lint": "eslint .",
     "test": "set NODE_ENV=test && jest --verbose --runInBand",
-    "test:integration": "set NODE_ENV=test && jest --verbose --runInBand tests/blog_api.test.js",
-    "test:unit": "set NODE_ENV=test && jest --verbose --runInBand tests/unit.test.js"
+    "test:unit": "set NODE_ENV=test && jest --verbose --runInBand tests/unit.test.js",
+    "test:integration": "set NODE_ENV=test && jest --verbose --runInBand tests/blog_api.test.js"
   },
   "author": "Fernando Angel Rodriguez Gonzalez",
   "license": "ISC",

@@ -63,7 +63,7 @@ describe('tests the endpoint that adds a blog', () => {
     const newBlog = {
       title: 'Canonical string reduction',
       author: 'Edsger W. Dijkstra',
-      url: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+      url: 'https://github.com/fernargdev',
     }
 
     const postResponse = await api
@@ -106,8 +106,8 @@ describe('tests the endpoint that adds a blog', () => {
 
 describe('tests the endpoint that deletes a blog', () => {
   test('succeeds with status code 204 if id is valid', async () => {
-    const blogAtStart = await helper.blogsInDb()
-    const blogToDelete = blogAtStart[0]
+    const blogsAtStart = await helper.blogsInDb()
+    const blogToDelete = blogsAtStart[0]
 
     await api.delete(`/api/blogs/${blogToDelete.id}`).expect(204)
 
@@ -116,6 +116,26 @@ describe('tests the endpoint that deletes a blog', () => {
 
     const titles = blogsAtEnd.map((r) => r.title)
     expect(titles).not.toContain(blogToDelete.title)
+  })
+})
+
+describe('tests the endpoint that updates a blog', () => {
+  test('succeeds with status code 200 if id is valid', async () => {
+    const blogsAtStart = await helper.blogsInDb()
+    const blogToUpdate = blogsAtStart[0]
+
+    const updatedBlog = {
+      ...blogToUpdate,
+      likes: blogToUpdate.likes + 1,
+    }
+
+    await api.put(`/api/blogs/${blogToUpdate.id}`).send(updatedBlog).expect(200)
+
+    const blogsAtEnd = await helper.blogsInDb()
+    expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length)
+
+    const updatedBlogInDB = blogsAtEnd.find((r) => r.id === blogToUpdate.id)
+    expect(updatedBlogInDB.likes).toBe(blogToUpdate.likes + 1)
   })
 })
 

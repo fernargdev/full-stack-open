@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const helper = require('./test_helper')
 const app = require('../app')
 const api = supertest(app)
+
 const Blog = require('../models/blog')
 
 mongoose.set('bufferTimeoutMS', 300000)
@@ -11,10 +12,7 @@ jest.setTimeout(300000)
 beforeEach(async () => {
   await Blog.deleteMany({})
 
-  const blogObjects = helper.initialBlogs.map((blog) => new Blog(blog))
-  const promiseArray = blogObjects.map((blog) => blog.save())
-
-  await Promise.all(promiseArray)
+  await Blog.insertMany(helper.initialBlogs)
 })
 
 describe('tests the endpoint that obtains the blogs', () => {
@@ -103,6 +101,21 @@ describe('tests the endpoint that adds a blog', () => {
 
     const blogsAtEnd = await helper.blogsInDb()
     expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length)
+  })
+})
+
+describe('tests the endpoint that deletes a blog', () => {
+  test('succeeds with status code 204 if id is valid', async () => {
+    const blogAtStart = await helper.blogsInDb()
+    const blogToDelete = blogAtStart[0]
+
+    await api.delete(`/api/blogs/${blogToDelete.id}`).expect(204)
+
+    const blogsAtEnd = await helper.blogsInDb()
+    expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length - 1)
+
+    const titles = blogsAtEnd.map((r) => r.title)
+    expect(titles).not.toContain(blogToDelete.title)
   })
 })
 

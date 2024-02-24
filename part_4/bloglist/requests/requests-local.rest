@@ -1,12 +1,56 @@
-### GET /api/blogs
-GET http://localhost:3003/api/blogs
+# ### GET /api/blogs
+# GET http://localhost:3003/api/blogs
 
-### POST /api/persons
-POST http://localhost:3003/api/blogs
+# ### POST /api/persons
+# POST http://localhost:3003/api/blogs
+# Content-Type: application/json
+
+# {
+#   "author": "Fernando",
+#   "url": "https://github.com/fernargdev",
+#   "likes": 100
+# }
+
+@api=http://localhost:3003/api
+
+### GET api/blogs
+GET {{api}}/blogs
+
+### POST api/blogs
+POST {{api}}/blogs
 Content-Type: application/json
 
 {
-  "author": "Fernando",
-  "url": "https://github.com/fernargdev",
-  "likes": 100
+ "title": "Prueba 14",
+ "author": "65d65b17cb6403cf2266b0e3",
+ "url": "https://github.com/fernargdev",
+ "likes": 14
 }
+
+### GET api/authors
+GET  {{api}}/authors
+
+### POST api/authors
+POST {{api}}/authors
+Content-Type: application/json
+
+{
+  "authorname": "Fernando3",
+  "name": "Fernando Rodriguez",
+  "password": "Salainen1"
+}
+
+### GET api/users
+GET  {{api}}/users
+
+### POST api/users
+POST {{api}}/users
+Content-Type: application/json
+
+{
+  "username": "hellas2",
+  "name": "Arto Hellas 2",
+  "password": "Fernando1234"
+}
+
+ 

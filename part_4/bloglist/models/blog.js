@@ -3,9 +3,17 @@ const config = require('../utils/config')
 const url = config.MONGODB_URI
 
 const blogSchema = new mongoose.Schema({
-  title: String,
-  author: String,
   url: String,
+  title: {
+    type: String,
+    required: true,
+    minlength: 5,
+  },
+  author: String,
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+  },
   likes: Number,
 })
 

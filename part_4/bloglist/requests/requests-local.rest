@@ -1,5 +1,20 @@
 @api=http://localhost:3003/api
 
+
+# ### GET api/authors
+# GET  {{api}}/authors
+
+# ### POST api/authors
+# POST {{api}}/authors
+# Content-Type: application/json
+
+# {
+#   "authorname": "Fernando3",
+#   "name": "Fernando Rodriguez",
+#   "password": "Salainen1"
+# }
+
+
 ### GET api/blogs
 GET {{api}}/blogs
 
@@ -8,24 +23,17 @@ POST {{api}}/blogs
 Content-Type: application/json
 
 {
- "title": "Prueba 13",
- "author": "65d65b17cb6403cf2266b0e3",
- "url": "https://github.com/fernargdev",
- "likes": 13
+ "url": "https://martinfowler.com",
+ "title": "Distributed Objects",
+ "author": "Martin Fowler"
 }
 
-### GET api/authors
-GET  {{api}}/authors
+### DELETE api/blogs/id
+DELETE {{api}}/blogs/65dae1d5cd542c9c9eb523b1
 
-### POST api/authors
-POST {{api}}/authors
-Content-Type: application/json
+### PUT api/blogs/id
+PUT {{api}}/blogs
 
-{
-  "authorname": "Fernando3",
-  "name": "Fernando Rodriguez",
-  "password": "Salainen1"
-}
 
 ### GET api/users
 GET  {{api}}/users
@@ -35,12 +43,12 @@ POST {{api}}/users
 Content-Type: application/json
 
 {
-  "username": "xx",
+  "username": "hellas",
   "name": "Arto Hellas",
   "password": "Fernando1234"
 }
 
 ### DELETE api/users
-DELETE {{api}}/users/65da10593cc6d6e0b35e05b6
+DELETE {{api}}/users/65dae1cccd542c9c9eb523ae
 
  

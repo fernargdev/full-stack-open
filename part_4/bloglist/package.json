@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "test": "jest --verbose --runInBand",
     "test:unit": "jest --verbose --runInBand tests/unit.test.js",
-    "test:integration": "jest --verbose --runInBand tests/blog_api.test.js"
+    "test:integration": "jest --verbose --runInBand tests/blog_api.test.js",
+    "test:users": "jest --verbose --runInBand tests/users.test.js"
   },
   "author": "Fernando Angel Rodriguez Gonzalez",
   "license": "ISC",

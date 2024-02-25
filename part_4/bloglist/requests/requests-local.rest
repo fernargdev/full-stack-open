@@ -29,7 +29,7 @@ Content-Type: application/json
 }
 
 ### DELETE api/blogs/id
-DELETE {{api}}/blogs/65dae1d5cd542c9c9eb523b1
+DELETE {{api}}/blogs/65dad361c64ab064c14525f1
 
 ### PUT api/blogs/id
 PUT {{api}}/blogs
@@ -49,6 +49,16 @@ Content-Type: application/json
 }
 
 ### DELETE api/users
-DELETE {{api}}/users/65dae1cccd542c9c9eb523ae
+DELETE {{api}}/users/65dad2b5c64ab064c14525ed
+
+
+### POST api/login
+POST {{api}}/login
+Content-Type: application/json
+
+{
+  "username": "hellas",
+  "password": "Fernando1234"
+}
 
  

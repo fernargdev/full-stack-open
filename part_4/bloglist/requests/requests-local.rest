@@ -21,6 +21,7 @@ GET {{api}}/blogs
 ### POST api/blogs
 POST {{api}}/blogs
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImhlbGxhcyIsImlkIjoiNjVkYWU0MDBiZWNhYmNjNWI3M2Q2MzFhIiwiaWF0IjoxNzA4ODk4NjI2fQ.ieWuM-_hK2jd7cCFl4MrY_a_rKeqDEwgIZjclKViKzY
 
 {
  "url": "https://martinfowler.com",
@@ -29,7 +30,7 @@ Content-Type: application/json
 }
 
 ### DELETE api/blogs/id
-DELETE {{api}}/blogs/65dad361c64ab064c14525f1
+DELETE {{api}}/blogs/65dbb5f89495406e8fa574b8
 
 ### PUT api/blogs/id
 PUT {{api}}/blogs

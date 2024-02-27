@@ -21,7 +21,7 @@ GET {{api}}/blogs
 ### POST api/blogs
 POST {{api}}/blogs
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImhlbGxhcyIsImlkIjoiNjVkYWU0MDBiZWNhYmNjNWI3M2Q2MzFhIiwiaWF0IjoxNzA4ODk4NjI2fQ.ieWuM-_hK2jd7cCFl4MrY_a_rKeqDEwgIZjclKViKzY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImhlbGxhcyIsImlkIjoiNjVkYWU0MDBiZWNhYmNjNWI3M2Q2MzFhIiwiaWF0IjoxNzA4ODk3NzA0fQ.Htr6Z-zHFKYS738q1a9jzApNqj1pFe2fjFsa0v8NuTw
 
 {
  "url": "https://martinfowler.com",
@@ -30,7 +30,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imhlb
 }
 
 ### DELETE api/blogs/id
-DELETE {{api}}/blogs/65dbb5f89495406e8fa574b8
+DELETE {{api}}/blogs/65ddfa412a768fe2ac202dea
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImhlbGxhcyIsImlkIjoiNjVkYWU0MDBiZWNhYmNjNWI3M2Q2MzFhIiwiaWF0IjoxNzA4ODk3NzA0fQ.Htr6Z-zHFKYS738q1a9jzApNqj1pFe2fjFsa0v8NuTw
 
 ### PUT api/blogs/id
 PUT {{api}}/blogs

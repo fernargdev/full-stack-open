@@ -37,6 +37,13 @@ describe('tests the endpoint that obtains the blogs', () => {
 })
 
 describe('tests the endpoint that adds a blog', () => {
+  let headers
+  beforeEach(async () => {
+    headers = {
+      Authorization: await helper.loginUser(),
+    }
+  })
+
   test('a valid blog can be added', async () => {
     const newBlog = {
       title: 'Canonical string reduction',
@@ -47,6 +54,7 @@ describe('tests the endpoint that adds a blog', () => {
 
     await api
       .post('/api/blogs')
+      .set(headers)
       .send(newBlog)
       .expect(201)
       .expect('Content-Type', /application\/json/)
@@ -55,7 +63,6 @@ describe('tests the endpoint that adds a blog', () => {
     expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length + 1)
 
     const titles = blogsAtEnd.map((r) => r.title)
-
     expect(titles).toContain('Canonical string reduction')
   })
 
@@ -68,6 +75,7 @@ describe('tests the endpoint that adds a blog', () => {
 
     const postResponse = await api
       .post('/api/blogs')
+      .set(headers)
       .send(newBlog)
       .expect(201)
       .expect('Content-Type', /application\/json/)
@@ -84,7 +92,7 @@ describe('tests the endpoint that adds a blog', () => {
       likes: 12,
     }
 
-    await api.post('/api/blogs').send(newBlog).expect(400)
+    await api.post('/api/blogs').set(headers).send(newBlog).expect(400)
 
     const blogsAtEnd = await helper.blogsInDb()
     expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length)
@@ -97,25 +105,54 @@ describe('tests the endpoint that adds a blog', () => {
       likes: 12,
     }
 
-    await api.post('/api/blogs').send(newBlog).expect(400)
+    await api.post('/api/blogs').set(headers).send(newBlog).expect(400)
 
     const blogsAtEnd = await helper.blogsInDb()
     expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length)
   })
+
+  test('blog without authorization is not added', async () => {
+    const newBlog = {
+      url: 'https://martinfowler.com',
+      title: 'Distributed Objects',
+      author: 'Martin Fowler',
+    }
+
+    const result = await api.post('/api/blogs').send(newBlog).expect(401)
+
+    const blogsAtEnd = await helper.blogsInDb()
+    expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length)
+
+    const titles = blogsAtEnd.map((r) => r.title)
+    expect(titles).not.toContain(newBlog.title)
+
+    expect(result.body.error).toContain('token missing or invalid')
+  })
 })
 
 describe('tests the endpoint that deletes a blog', () => {
-  test('succeeds with status code 204 if id is valid', async () => {
-    const blogsAtStart = await helper.blogsInDb()
-    const blogToDelete = blogsAtStart[0]
+  let headers
+  beforeEach(async () => {
+    headers = {
+      Authorization: await helper.loginUser(),
+    }
+  })
 
-    await api.delete(`/api/blogs/${blogToDelete.id}`).expect(204)
+  test('succeeds with status code 204 if id is valid', async () => {
+    const newBlog = {
+      url: 'https://martinfowler.com',
+      title: 'Distributed Objects',
+      author: 'Martin Fowler',
+    }
+    const savedBlog = await api.post('/api/blogs').set(headers).send(newBlog)
+
+    await api.delete(`/api/blogs/${savedBlog.body.id}`).set(headers).expect(204)
 
     const blogsAtEnd = await helper.blogsInDb()
-    expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length - 1)
+    expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length)
 
     const titles = blogsAtEnd.map((r) => r.title)
-    expect(titles).not.toContain(blogToDelete.title)
+    expect(titles).not.toContain(newBlog.title)
   })
 })
 

@@ -104,9 +104,7 @@ describe('when there is initially one user in db', () => {
     const usersAtEnd = await helper.usersInDb()
     expect(usersAtEnd).toHaveLength(usersAtStart.length)
 
-    expect(result.body.error).toContain(
-      'password must be at least 3 characters long'
-    )
+    expect(result.body.error).toContain('password is too short')
   })
 })
 

@@ -1,27 +1,13 @@
 @api=http://localhost:3003/api
 
 
-# ### GET api/authors
-# GET  {{api}}/authors
-
-# ### POST api/authors
-# POST {{api}}/authors
-# Content-Type: application/json
-
-# {
-#   "authorname": "Fernando3",
-#   "name": "Fernando Rodriguez",
-#   "password": "Salainen1"
-# }
-
-
-### GET api/blogs
+### GET api/blogs ✅
 GET {{api}}/blogs
 
-### POST api/blogs
+### POST api/blogs ✅
 POST {{api}}/blogs
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImhlbGxhcyIsImlkIjoiNjVkZTEyNWIzZjczNDI3YTk5YzI5YjYzIiwiaWF0IjoxNzA5MDUyNTE0fQ.hL4b6GJdScyi5iDw69828RSQlQj2nYAV3opy521kkZQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImhlbGxhcyIsImlkIjoiNjVlMGE3MzcxYzUwZjA1YmY4ZjE4MTI0IiwiaWF0IjoxNzA5MjIxNzE0fQ.mb2yz6NpKjd5fPUhLLdogaHeeq5WBgg3DxoVvmnNzM4
 
 {
  "url": "https://martinfowler.com",
@@ -29,18 +15,24 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imhlb
  "author": "Martin Fowler"
 }
 
-### DELETE api/blogs/id
-DELETE {{api}}/blogs/65de149f75048ea31fee4dd1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImhlbGxhcyIsImlkIjoiNjVkZTEyNWIzZjczNDI3YTk5YzI5YjYzIiwiaWF0IjoxNzA5MDUyNTE0fQ.hL4b6GJdScyi5iDw69828RSQlQj2nYAV3opy521kkZQ
+### DELETE api/blogs/id ✅
+DELETE {{api}}/blogs/65e0a7a41c50f05bf8f18131
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImhlbGxhcyIsImlkIjoiNjVlMGE3MzcxYzUwZjA1YmY4ZjE4MTI0IiwiaWF0IjoxNzA5MjIxNzE0fQ.mb2yz6NpKjd5fPUhLLdogaHeeq5WBgg3DxoVvmnNzM4
 
-### PUT api/blogs/id
-PUT {{api}}/blogs
+### PUT api/blogs/id ✅
+PUT {{api}}/blogs/65e0a7f21c50f05bf8f18145
+Content-Type: application/json
+
+{
+  "title": "Domain Specific Languages",
+  "likes": 12
+}
 
 
-### GET api/users
+### GET api/users ✅
 GET  {{api}}/users
 
-### POST api/users
+### POST api/users ✅
 POST {{api}}/users
 Content-Type: application/json
 
@@ -50,11 +42,11 @@ Content-Type: application/json
   "password": "Fernando1234"
 }
 
-### DELETE api/users
-DELETE {{api}}/users/65dae400becabcc5b73d631a
+### DELETE api/users ✅
+DELETE {{api}}/users/65e0a7031c50f05bf8f1811b
 
 
-### POST api/login
+### POST api/login ✅
 POST {{api}}/login
 Content-Type: application/json
 

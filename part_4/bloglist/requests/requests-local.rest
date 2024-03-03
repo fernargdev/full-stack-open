@@ -7,26 +7,21 @@ GET {{api}}/blogs
 ### POST api/blogs ✅
 POST {{api}}/blogs
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImhlbGxhcyIsImlkIjoiNjVlMGE3MzcxYzUwZjA1YmY4ZjE4MTI0IiwiaWF0IjoxNzA5MjIxNzE0fQ.mb2yz6NpKjd5fPUhLLdogaHeeq5WBgg3DxoVvmnNzM4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpIiwiaWQiOiI2NWUzYzRiZTJjZWI2MTAyMzNhNGZlZTgiLCJpYXQiOjE3MDk0MjU4NzJ9.H9TEg2WoHQTgZn4CMy2-7R6CxMEP-UpA_TO-YHpFufw
 
 {
- "url": "https://martinfowler.com",
- "title": "Distributed Objects",
+ "url": "https://Luukkainen.com",
+ "title": "Microservices and the First Law of Distributed Objects",
  "author": "Martin Fowler"
 }
 
-### DELETE api/blogs/id ✅
-DELETE {{api}}/blogs/65e0a7a41c50f05bf8f18131
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImhlbGxhcyIsImlkIjoiNjVlMGE3MzcxYzUwZjA1YmY4ZjE4MTI0IiwiaWF0IjoxNzA5MjIxNzE0fQ.mb2yz6NpKjd5fPUhLLdogaHeeq5WBgg3DxoVvmnNzM4
+### DELETE api/blogs/id
+DELETE {{api}}/blogs/65e3bd702ceb610233a4fea5
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImhlbGxhcyIsImlkIjoiNjVlM2JkMjcyY2ViNjEwMjMzYTRmZTlkIiwiaWF0IjoxNzA5NDIzOTI4fQ.Roe2XzqV1EJ1bYMccuDQwsrV5q_xTulR_DfFrAopzbA
 
-### PUT api/blogs/id ✅
-PUT {{api}}/blogs/65e0a7f21c50f05bf8f18145
-Content-Type: application/json
 
-{
-  "title": "Domain Specific Languages",
-  "likes": 12
-}
+### PUT api/blogs/id
+PUT {{api}}/blogs
 
 
 ### GET api/users ✅
@@ -37,13 +32,13 @@ POST {{api}}/users
 Content-Type: application/json
 
 {
-  "username": "hellas",
-  "name": "Arto Hellas",
+  "username": "mluukkai",
+  "name": "Matti Luukkainen",
   "password": "Fernando1234"
 }
 
-### DELETE api/users ✅
-DELETE {{api}}/users/65e0a7031c50f05bf8f1811b
+### DELETE api/users
+DELETE {{api}}/users/65e3bd272ceb610233a4fe9d
 
 
 ### POST api/login ✅
@@ -51,7 +46,7 @@ POST {{api}}/login
 Content-Type: application/json
 
 {
-  "username": "hellas",
+  "username": "mluukkai",
   "password": "Fernando1234"
 }
 

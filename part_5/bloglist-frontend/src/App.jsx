@@ -14,6 +14,14 @@ const App = () => {
     blogService.getAll().then((blogs) => setBlogs(blogs))
   }, [])
 
+  useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      setUser(user)
+    }
+  }, [])
+
   const handleLogin = async (event) => {
     event.preventDefault()
 
@@ -22,6 +30,9 @@ const App = () => {
         username,
         password,
       })
+
+      window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user))
+
       setUser(user)
       setUsername('')
       setPassword('')
@@ -33,6 +44,14 @@ const App = () => {
     }
   }
 
+  const handleLogout = () => {
+    window.localStorage.removeItem('loggedBlogappUser')
+    setUser(null)
+    setUsername('')
+    setPassword('')
+    window.location.reload()
+  }
+
   const loginForm = () => (
     <form onSubmit={handleLogin}>
       <div>
@@ -42,7 +61,7 @@ const App = () => {
           value={username}
           name="Username"
           onChange={({ target }) => setUsername(target.value)}
-          autoComplete="username"
+          // autoComplete="username"
         />
       </div>
       <div>
@@ -52,7 +71,7 @@ const App = () => {
           value={password}
           name="Password"
           onChange={({ target }) => setPassword(target.value)}
-          autoComplete="current-password"
+          // autoComplete="current-password"
         />
       </div>
       <button type="submit">login</button>
@@ -71,6 +90,12 @@ const App = () => {
   return (
     <div>
       <h2>blogs</h2>
+      <p>
+        {user.name} logged in
+        <button type="button" onClick={handleLogout}>
+          logout
+        </button>
+      </p>
       {blogs.map((blog) => (
         <Blog key={blog.id} blog={blog} />
       ))}

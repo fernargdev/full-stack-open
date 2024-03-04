@@ -16,6 +16,11 @@ const App = () => {
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
 
+  const [message, setMessage] = useState({
+    message: null,
+    isError: false,
+  })
+
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
     if (loggedUserJSON) {
@@ -45,7 +50,13 @@ const App = () => {
       setUsername('')
       setPassword('')
     } catch (err) {
-      console.log(err)
+      setMessage({
+        message: 'wrong username or password',
+        isError: true,
+      })
+      setTimeout(() => {
+        setMessage({ message: null, isError: false })
+      }, 5000)
     }
   }
 
@@ -72,8 +83,22 @@ const App = () => {
       setTitle('')
       setAuthor('')
       setUrl('')
+      setMessage({
+        message: `a new blog ${returnedBlog.title} by ${returnedBlog.author} added`,
+      })
+      setTimeout(() => {
+        setMessage({
+          message: null,
+        })
+      }, 5000)
     } catch (err) {
-      console.log(err)
+      setMessage({
+        message: 'the title and url are required in a valid format',
+        isError: true,
+      })
+      setTimeout(() => {
+        setMessage({ message: null, isError: false })
+      }, 5000)
     }
   }
 
@@ -136,10 +161,20 @@ const App = () => {
     </form>
   )
 
+  const notification = ({ message, isError }) => {
+    if (message === null) {
+      return null
+    }
+
+    const className = isError ? 'error' : 'note'
+    return <div className={className}>{message}</div>
+  }
+
   if (user === null) {
     return (
       <div>
-        <h2>Log in to application</h2>
+        <h2>log in to application</h2>
+        {notification({ message: message.message, isError: message.isError })}
         {loginForm()}
       </div>
     )
@@ -148,6 +183,7 @@ const App = () => {
   return (
     <div>
       <h2>blogs</h2>
+      {notification({ message: message.message, isError: message.isError })}
       <p>
         {user.name} logged in
         <button type="button" onClick={handleLogout}>

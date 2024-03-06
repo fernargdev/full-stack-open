@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react'
 
-import Blog from './components/Blog'
-
 import loginService from './services/login'
 import blogService from './services/blogs'
+
+import Blog from './components/Blog'
+import BlogForm from './components/BlogForm'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -20,6 +21,8 @@ const App = () => {
     message: null,
     isError: false,
   })
+
+  const [blogVisible, setBlogVisible] = useState(false)
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
@@ -83,6 +86,7 @@ const App = () => {
       setTitle('')
       setAuthor('')
       setUrl('')
+      setBlogVisible(false)
       setMessage({
         message: `a new blog ${returnedBlog.title} by ${returnedBlog.author} added`,
       })
@@ -128,38 +132,31 @@ const App = () => {
     </form>
   )
 
-  const blogForm = () => (
-    <form onSubmit={addBlog}>
+  const blogForm = () => {
+    const hideWhenVisible = { display: blogVisible ? 'none' : '' }
+    const showWhenVisible = { display: blogVisible ? '' : 'none' }
+
+    return (
       <div>
-        title
-        <input
-          type="text"
-          value={title}
-          name="Title"
-          onChange={({ target }) => setTitle(target.value)}
-        />
+        <div style={hideWhenVisible}>
+          <button onClick={() => setBlogVisible(true)}>new blog</button>
+        </div>
+
+        <div style={showWhenVisible}>
+          <BlogForm
+            title={title}
+            author={author}
+            url={url}
+            handleTitleChange={({ target }) => setTitle(target.value)}
+            handleAuthorChange={({ target }) => setAuthor(target.value)}
+            handleUrlChange={({ target }) => setUrl(target.value)}
+            handleSubmit={addBlog}
+          />
+          <button onClick={() => setBlogVisible(false)}>cancel</button>
+        </div>
       </div>
-      <div>
-        author
-        <input
-          type="text"
-          value={author}
-          name="Author"
-          onChange={({ target }) => setAuthor(target.value)}
-        />
-      </div>
-      <div>
-        url
-        <input
-          type="url"
-          value={url}
-          name="Url"
-          onChange={({ target }) => setUrl(target.value)}
-        />
-      </div>
-      <button type="submit">create</button>
-    </form>
-  )
+    )
+  }
 
   const notification = ({ message, isError }) => {
     if (message === null) {

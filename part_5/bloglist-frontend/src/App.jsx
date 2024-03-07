@@ -13,10 +13,6 @@ const App = () => {
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
 
-  // const [title, setTitle] = useState('')
-  // const [author, setAuthor] = useState('')
-  // const [url, setUrl] = useState('')
-
   const [message, setMessage] = useState({
     message: null,
     isError: false,
@@ -71,41 +67,6 @@ const App = () => {
     window.location.reload()
   }
 
-  // const addBlog = async (event) => {
-  //   event.preventDefault()
-
-  //   try {
-  //     const blogObject = {
-  //       title,
-  //       author,
-  //       url,
-  //     }
-
-  //     const returnedBlog = await blogService.create(blogObject)
-  //     setBlogs(blogs.concat(returnedBlog))
-  //     setTitle('')
-  //     setAuthor('')
-  //     setUrl('')
-  //     setBlogVisible(false)
-  //     setMessage({
-  //       message: `a new blog ${returnedBlog.title} by ${returnedBlog.author} added`,
-  //     })
-  //     setTimeout(() => {
-  //       setMessage({
-  //         message: null,
-  //       })
-  //     }, 5000)
-  //   } catch (err) {
-  //     setMessage({
-  //       message: 'the title and url are required in a valid format',
-  //       isError: true,
-  //     })
-  //     setTimeout(() => {
-  //       setMessage({ message: null, isError: false })
-  //     }, 5000)
-  //   }
-  // }
-
   const addBlog = async (blogObject) => {
     try {
       const returnedBlog = await blogService.create(blogObject)
@@ -156,32 +117,6 @@ const App = () => {
     </form>
   )
 
-  // const blogForm = () => {
-  //   const hideWhenVisible = { display: blogVisible ? 'none' : '' }
-  //   const showWhenVisible = { display: blogVisible ? '' : 'none' }
-
-  //   return (
-  //     <div>
-  //       <div style={hideWhenVisible}>
-  //         <button onClick={() => setBlogVisible(true)}>new blog</button>
-  //       </div>
-
-  //       <div style={showWhenVisible}>
-  //         <BlogForm
-  //           title={title}
-  //           author={author}
-  //           url={url}
-  //           handleTitleChange={({ target }) => setTitle(target.value)}
-  //           handleAuthorChange={({ target }) => setAuthor(target.value)}
-  //           handleUrlChange={({ target }) => setUrl(target.value)}
-  //           handleSubmit={addBlog}
-  //         />
-  //         <button onClick={() => setBlogVisible(false)}>cancel</button>
-  //       </div>
-  //     </div>
-  //   )
-  // }
-
   const blogForm = () => {
     const hideWhenVisible = { display: blogVisible ? 'none' : '' }
     const showWhenVisible = { display: blogVisible ? '' : 'none' }
@@ -189,7 +124,7 @@ const App = () => {
     return (
       <div>
         <div style={hideWhenVisible}>
-          <button onClick={() => setBlogVisible(true)}>new blog</button>
+          <button onClick={() => setBlogVisible(true)}>create new blog</button>
         </div>
 
         <div style={showWhenVisible}>

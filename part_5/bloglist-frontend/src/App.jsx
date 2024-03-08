@@ -98,6 +98,11 @@ const App = () => {
     )
   }
 
+  const deleteBlog = async (blogId) => {
+    const deleteBlog = await blogService.deleteBlog(blogId)
+    setBlogs(blogs.filter((blog) => blog.id !== blogId))
+  }
+
   const sortedBlogs = [...blogs].sort((a, b) => b.likes - a.likes)
 
   const loginForm = () => (
@@ -178,7 +183,13 @@ const App = () => {
       {blogForm()}
 
       {sortedBlogs.map((blog) => (
-        <Blog key={blog.id} blog={blog} updateLikes={updateLikes} />
+        <Blog
+          key={blog.id}
+          blog={blog}
+          updateLikes={updateLikes}
+          user={user}
+          deleteBlog={deleteBlog}
+        />
       ))}
     </div>
   )

@@ -40,10 +40,11 @@ const Blog = ({ blog, updateLikes }) => {
 
       {detailsVisible && (
         <div>
-          {blog.url}
-          <br />
-          likes {blog.likes} <button onClick={handleLike}>like</button>
-          <br />
+          <a href={blog.url}>{blog.url}</a>
+          <div>
+            <span>likes {blog.likes}</span>
+            <button onClick={handleLike}>like</button>
+          </div>
           {blog.user.name}
         </div>
       )}

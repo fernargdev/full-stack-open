@@ -1,9 +1,11 @@
-const Notification = ({ message, isError }) => {
+const Notification = ({ message }) => {
   if (message === null) return null
 
-  const className = isError ? 'error' : 'note'
+  if (message.includes('Error:')) {
+    return <div className="error">{message.substring(7)}</div>
+  }
 
-  return <div className={className}>{message}</div>
+  return <div className="note">{message}</div>
 }
 
 export default Notification

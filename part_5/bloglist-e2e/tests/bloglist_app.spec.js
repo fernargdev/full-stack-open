@@ -61,5 +61,24 @@ describe('Note app', () => {
       await expect(page.getByRole('button', { name: 'view' })).toBeVisible()
       await expect(page.getByText('blog-0 Ferna')).toBeVisible()
     })
+
+    describe('And several blogs exists', () => {
+      beforeEach(async ({ page }) => {
+        await createBlog(page, 'blog-2', 'Ferna', 'http://localhost:5173')
+        await createBlog(page, 'blog-3', 'Ferna', 'http://localhost:5173')
+        await createBlog(page, 'blog-1', 'Ferna', 'http://localhost:5173')
+      })
+
+      test('the blog can be edited', async ({ page }) => {
+        const blog = page.locator('.blog').filter({ hasText: 'blog-1' })
+        await blog.getByRole('button', { name: 'view' }).click()
+
+        await expect(blog.getByText('likes 0')).toBeVisible()
+        await blog.getByRole('button', { name: 'like' }).click()
+
+        await expect(blog.getByText('likes 1')).toBeVisible()
+        await expect(blog.getByText('likes 0')).not.toBeVisible()
+      })
+    })
   })
 })

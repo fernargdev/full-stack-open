@@ -117,6 +117,30 @@ describe('Note app', () => {
           blog.getByRole('button', { name: 'remove' })
         ).not.toBeVisible()
       })
+
+      test('blogs should be organized from most likes to least likes', async ({
+        page,
+      }) => {
+        const blog1 = page.locator('.blog').filter({ hasText: 'blog-1' })
+        const blog2 = page.locator('.blog').filter({ hasText: 'blog-2' })
+        const blog3 = page.locator('.blog').filter({ hasText: 'blog-3' })
+
+        await blog1.getByRole('button', { name: 'view' }).click()
+        await blog2.getByRole('button', { name: 'view' }).click()
+        await blog3.getByRole('button', { name: 'view' }).click()
+
+        await blog3.getByRole('button', { name: 'like' }).click()
+        await blog3.getByRole('button', { name: 'like' }).click()
+        await blog2.getByRole('button', { name: 'like' }).click()
+
+        expect(blog3).toContainText('likes 2')
+        expect(blog2).toContainText('likes 1')
+        expect(blog1).toContainText('likes 0')
+
+        expect(page.locator('.blog').first()).toContainText('blog-3')
+        expect(page.locator('.blog').nth(1)).toContainText('blog-2')
+        expect(page.locator('.blog').last()).toContainText('blog-1')
+      })
     })
   })
 })

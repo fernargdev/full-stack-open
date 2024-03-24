@@ -21,6 +21,7 @@ const LoginForm = ({ handleLogin }) => {
           <input
             type="text"
             name="Username"
+            data-testid="username"
             autoComplete="username"
             value={username}
             onChange={({ target }) => setUsername(target.value)}
@@ -31,6 +32,7 @@ const LoginForm = ({ handleLogin }) => {
           <input
             type="password"
             name="Password"
+            data-testid="password"
             autoComplete="current-password"
             value={password}
             onChange={({ target }) => setPassword(target.value)}

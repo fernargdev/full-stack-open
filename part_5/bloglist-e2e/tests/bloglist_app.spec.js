@@ -64,9 +64,9 @@ describe('Note app', () => {
 
     describe('And several blogs exists', () => {
       beforeEach(async ({ page }) => {
-        await createBlog(page, 'blog-2', 'Ferna', 'http://localhost:5173')
         await createBlog(page, 'blog-3', 'Ferna', 'http://localhost:5173')
         await createBlog(page, 'blog-1', 'Ferna', 'http://localhost:5173')
+        await createBlog(page, 'blog-2', 'Ferna', 'http://localhost:5173')
       })
 
       test('the blog can be edited', async ({ page }) => {
@@ -78,6 +78,20 @@ describe('Note app', () => {
 
         await expect(blog.getByText('likes 1')).toBeVisible()
         await expect(blog.getByText('likes 0')).not.toBeVisible()
+      })
+
+      test('the user who added the blog can delete it', async ({ page }) => {
+        const blog = page.locator('.blog').filter({ hasText: 'blog-2' })
+        await blog.getByRole('button', { name: 'view' }).click()
+        await expect(blog.getByRole('button', { name: 'remove' })).toBeVisible()
+
+        page.on('dialog', async (dialog) => {
+          await dialog.accept()
+        })
+        await page.getByRole('button', { name: 'remove' }).click()
+
+        await expect(blog.getByText('blog-2')).not.toBeVisible()
+        await expect(blog).not.toBeVisible()
       })
     })
   })

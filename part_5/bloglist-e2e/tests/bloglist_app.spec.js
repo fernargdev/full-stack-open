@@ -64,9 +64,9 @@ describe('Note app', () => {
 
     describe('And several blogs exists', () => {
       beforeEach(async ({ page }) => {
-        await createBlog(page, 'blog-3', 'Ferna', 'http://localhost:5173')
         await createBlog(page, 'blog-1', 'Ferna', 'http://localhost:5173')
         await createBlog(page, 'blog-2', 'Ferna', 'http://localhost:5173')
+        await createBlog(page, 'blog-3', 'Ferna', 'http://localhost:5173')
       })
 
       test('the blog can be edited', async ({ page }) => {
@@ -92,6 +92,30 @@ describe('Note app', () => {
 
         await expect(blog.getByText('blog-2')).not.toBeVisible()
         await expect(blog).not.toBeVisible()
+      })
+
+      test('only the user who added the blog sees the remove button', async ({
+        page,
+        request,
+      }) => {
+        const blog = page.locator('.blog').filter({ hasText: 'blog-3' })
+        await blog.getByRole('button', { name: 'view' }).click()
+        await expect(blog.getByRole('button', { name: 'remove' })).toBeVisible()
+
+        await page.getByRole('button', { name: 'logout' }).click()
+        await request.post('/api/users', {
+          data: {
+            username: 'test-user',
+            name: 'Fernando Rodriguez',
+            password: 'Fernando1234',
+          },
+        })
+        await loginWith(page, 'test-user', 'Fernando1234')
+
+        await blog.getByRole('button', { name: 'view' }).click()
+        await expect(
+          blog.getByRole('button', { name: 'remove' })
+        ).not.toBeVisible()
       })
     })
   })

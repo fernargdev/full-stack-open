@@ -100,9 +100,7 @@ const App = () => {
       <h1>Blogs</h1>
       <Notification message={message} />
       {user === null ? (
-        <Togglable buttonLabel="login">
-          <LoginForm handleLogin={handleLogin} />
-        </Togglable>
+        <LoginForm handleLogin={handleLogin} />
       ) : (
         <div>
           <p>

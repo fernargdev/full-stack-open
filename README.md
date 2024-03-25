@@ -54,3 +54,13 @@ This repository contains the answers to the [Full Stack Open version 2024](https
 - Legacy: Testing with Jest
 
 [See the answers](https://github.com/fernargdev/full-stack-open/tree/main/part_4)
+
+### [Part 5 - Testing React apps](https://fullstackopen.com/en/part5)
+
+- Login in frontend
+- props.children and proptypes
+- Testing React apps
+- End to end testing: Playwright
+- End to end testing: Cypress
+
+[See the answers](https://github.com/fernargdev/full-stack-open/tree/main/part_5)

@@ -1,0 +1,16 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: left;
+}
+
+div.anecdote {
+  margin-bottom: 2rem;
+  padding: 0.5rem;
+  border: 2px solid;
+}
+
+li {
+  cursor: pointer;
+}

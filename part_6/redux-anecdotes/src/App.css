@@ -11,6 +11,6 @@ div.anecdote {
   border: 2px solid;
 }
 
-li {
-  cursor: pointer;
+input {
+  margin-bottom: 0.5rem;
 }

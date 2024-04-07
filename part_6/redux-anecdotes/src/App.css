@@ -18,3 +18,10 @@ input {
 .filter {
   margin-bottom: 1.5rem;
 }
+
+.notification {
+  border: solid;
+  padding: 10px;
+  border-width: 1px;
+  font-weight: bold;
+}

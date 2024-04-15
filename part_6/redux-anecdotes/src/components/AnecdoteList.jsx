@@ -5,7 +5,7 @@ import { createNotification } from '../reducers/notificationReducer'
 
 const Anecdote = ({ anecdote, handleClick }) => {
   return (
-    <div key={anecdote.id} className="anecdote">
+    <div className="anecdote">
       <div>{anecdote.content}</div>
       <div>
         has {anecdote.votes}
@@ -28,9 +28,9 @@ const AnecdoteList = () => {
     })
   })
 
-  const addVote = async (id) => {
-    dispatch(voteAnecdote(id))
-    dispatch(createNotification(`you voted: '${id}'`))
+  const addVote = async (anecdote) => {
+    dispatch(voteAnecdote(anecdote.id))
+    dispatch(createNotification(`you voted: '${anecdote.content}'`, 10))
   }
 
   return [...anecdotes]
@@ -39,7 +39,7 @@ const AnecdoteList = () => {
       <Anecdote
         key={anecdote.id}
         anecdote={anecdote}
-        handleClick={() => addVote(anecdote.id)}
+        handleClick={() => addVote(anecdote)}
       />
     ))
 }

@@ -1,0 +1,27 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: left;
+}
+
+div.anecdote {
+  margin-bottom: 2rem;
+  padding: 0.5rem;
+  border: 2px solid;
+}
+
+input {
+  margin-bottom: 0.5rem;
+}
+
+.filter {
+  margin-bottom: 1.5rem;
+}
+
+.notification {
+  border: solid;
+  padding: 10px;
+  border-width: 1px;
+  font-weight: bold;
+}

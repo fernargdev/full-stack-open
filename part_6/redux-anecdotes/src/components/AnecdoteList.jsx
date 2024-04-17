@@ -5,7 +5,7 @@ import { createNotification } from '../reducers/notificationReducer'
 
 const Anecdote = ({ anecdote, handleClick }) => {
   return (
-    <div className="anecdote">
+    <div key={anecdote.id} className="anecdote">
       <div>{anecdote.content}</div>
       <div>
         has {anecdote.votes}

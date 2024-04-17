@@ -11,6 +11,14 @@ div.anecdote {
   border: 2px solid;
 }
 
+div.form {
+  margin: 2.5rem 0 2.5rem 0;
+}
+
+div.form > h3 {
+  margin: 0;
+}
+
 input {
   margin-bottom: 0.5rem;
 }

@@ -1,25 +1,31 @@
 import './styles/index.css'
 import './styles/App.css'
 
-import { useQuery } from '@tanstack/react-query'
-import axios from 'axios'
+import { useQueryClient, useMutation, useQuery } from '@tanstack/react-query'
+import { createAnecdote, getAnecdotes } from './requests'
 
 import AnecdoteForm from './components/AnecdoteForm'
 import Notification from './components/Notification'
 
 const App = () => {
+  const queryClient = useQueryClient()
+
+  const newAnecdoteMutation = useMutation({
+    mutationFn: createAnecdote,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['anecdotes'] })
+    },
+  })
+
   const handleVote = (anecdote) => {
     console.log('vote')
   }
 
   const result = useQuery({
     queryKey: ['anecdotes'],
-    queryFn: () =>
-      axios.get('http://localhost:3001/anecdotes').then((res) => res.data),
+    queryFn: getAnecdotes,
     retry: 1,
   })
-
-  console.log(JSON.parse(JSON.stringify(result)))
 
   if (result.isLoading) return <div>Loading data...</div>
 
@@ -33,7 +39,7 @@ const App = () => {
       <h3>Anecdote app</h3>
 
       <Notification />
-      <AnecdoteForm />
+      <AnecdoteForm newAnecdoteMutation={newAnecdoteMutation} />
 
       {anecdotes.map((anecdote) => (
         <div key={anecdote.id}>

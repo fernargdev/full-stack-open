@@ -16,15 +16,15 @@ const Anecdote = ({ anecdote }) => {
         anecdote.id === updatedAnecdote.id ? updatedAnecdote : anecdote
       )
       queryClient.setQueryData(['anecdotes'], updatedAnecdotes)
+      notificationDispatch({
+        type: 'SET_NOTIFICATION',
+        payload: `anecdote "${anecdote.content}" voted`,
+      })
     },
   })
 
   const handleVote = (anecdote) => {
     updateAnecdoteMutation.mutate({ ...anecdote, votes: anecdote.votes + 1 })
-    notificationDispatch({
-      type: 'SET_NOTIFICATION',
-      payload: `You voted "${anecdote.content}"`,
-    })
   }
 
   return (

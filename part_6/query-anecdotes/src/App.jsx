@@ -1,35 +1,22 @@
 import './styles/index.css'
 import './styles/App.css'
 
-import { useQueryClient, useMutation, useQuery } from '@tanstack/react-query'
-import { createAnecdote, getAnecdotes, updateAnecdote } from './requests'
+import { useQuery } from '@tanstack/react-query'
+import { getAnecdotes } from './requests'
 
-import AnecdoteForm from './components/AnecdoteForm'
 import Notification from './components/Notification'
+import AnecdoteForm from './components/AnecdoteForm'
 import AnecdoteList from './components/AnecdoteList'
 
 const App = () => {
-  const queryClient = useQueryClient()
-
-  const newAnecdoteMutation = useMutation({
-    mutationFn: createAnecdote,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['anecdotes'] })
-    },
-  })
-
-  const updateAnecdoteMutation = useMutation({
-    mutationFn: updateAnecdote,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['anecdotes'] })
-    },
-  })
-
   const result = useQuery({
     queryKey: ['anecdotes'],
     queryFn: getAnecdotes,
-    retry: 1,
+    refetchOnWindowFocus: false,
+    retry: 2,
   })
+
+  // console.log(JSON.parse(JSON.stringify(result)))
 
   if (result.isLoading) return <div>Loading data...</div>
 
@@ -42,11 +29,8 @@ const App = () => {
     <div>
       <h3>Anecdote app</h3>
       <Notification />
-      <AnecdoteForm newAnecdoteMutation={newAnecdoteMutation} />
-      <AnecdoteList
-        anecdotes={anecdotes}
-        updateAnecdoteMutation={updateAnecdoteMutation}
-      />
+      <AnecdoteForm />
+      <AnecdoteList anecdotes={anecdotes} />
     </div>
   )
 }

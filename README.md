@@ -64,3 +64,12 @@ This repository contains the answers to the [Full Stack Open version 2024](https
 - End to end testing: Cypress
 
 [See the answers](https://github.com/fernargdev/full-stack-open/tree/main/part_5)
+
+### [Part 6 - Advanced state management](https://fullstackopen.com/en/part6)
+
+- Flux-architecture and Redux
+- Many reducers
+- Communicating with server in a Redux application
+- React Query, useReducer and the context
+
+[See the answers](https://github.com/fernargdev/full-stack-open/tree/main/part_6)

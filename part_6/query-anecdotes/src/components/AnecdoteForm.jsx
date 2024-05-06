@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-
 import { useQueryClient, useMutation } from '@tanstack/react-query'
 import { createAnecdote } from '../requests'
 import { useNotificationDispatch } from '../NotificationContext'

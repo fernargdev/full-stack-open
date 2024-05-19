@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/prop-types */
 
@@ -106,7 +105,7 @@ const CreateNew = (props) => {
   }
 
   return (
-    <div>
+    <div className="new-form">
       <h2>create a new anecdote</h2>
       <form onSubmit={handleSubmit}>
         <div>
@@ -139,6 +138,14 @@ const CreateNew = (props) => {
   )
 }
 
+const Notification = ({ notification }) => {
+  if (notification === '') {
+    return null
+  }
+
+  return <div>{notification}</div>
+}
+
 const App = () => {
   const [anecdotes, setAnecdotes] = useState([
     {
@@ -157,33 +164,45 @@ const App = () => {
     },
   ])
 
-  const [notification, setNotification] = useState('')
-
-  const addNew = (anecdote) => {
-    anecdote.id = Math.round(Math.random() * 10000)
-    setAnecdotes(anecdotes.concat(anecdote))
-  }
-
   const anecdoteById = (id) => anecdotes.find((a) => a.id === id)
 
   const match = useMatch('/anecdotes/:id')
   const anecdote = match ? anecdoteById(Number(match.params.id)) : null
 
-  const vote = (id) => {
-    const anecdote = anecdoteById(id)
+  const [notification, setNotification] = useState('')
 
-    const voted = {
-      ...anecdote,
-      votes: anecdote.votes + 1,
-    }
-
-    setAnecdotes(anecdotes.map((a) => (a.id === id ? voted : a)))
+  const handleNotification = ({ message }) => {
+    setTimeout(() => setNotification(message))
+    setTimeout(() => setNotification(''), 5000)
   }
+
+  const navigate = useNavigate()
+
+  const addNew = (anecdote) => {
+    anecdote.id = Math.round(Math.random() * 10000)
+    setAnecdotes(anecdotes.concat(anecdote))
+    handleNotification({
+      message: `a new anecdote: '${anecdote.content}' created!`,
+    })
+    navigate('/')
+  }
+
+  // const vote = (id) => {
+  //   const anecdote = anecdoteById(id)
+
+  //   const voted = {
+  //     ...anecdote,
+  //     votes: anecdote.votes + 1,
+  //   }
+
+  //   setAnecdotes(anecdotes.map((a) => (a.id === id ? voted : a)))
+  // }
 
   return (
     <div>
       <h1>Software anecdotes</h1>
       <Menu />
+      <Notification notification={notification} />
 
       <Routes>
         <Route path="/" element={<AnecdoteList anecdotes={anecdotes} />} />

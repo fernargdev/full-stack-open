@@ -1,26 +1,26 @@
-import { useState } from 'react'
+import { useState } from 'react';
 
 const Blog = ({ username, blog, updateLikes, deleteBlog }) => {
-  const [detailsVisible, setDetailsVisible] = useState(false)
+  const [detailsVisible, setDetailsVisible] = useState(false);
 
   const toggleDetails = () => {
-    setDetailsVisible(!detailsVisible)
-  }
+    setDetailsVisible(!detailsVisible);
+  };
 
   const handleLike = async () => {
     const blogToUpdate = {
       ...blog,
       user: blog.user.id,
       likes: blog.likes + 1,
-    }
-    updateLikes(blogToUpdate)
-  }
+    };
+    updateLikes(blogToUpdate);
+  };
 
   const handleDelete = async () => {
     if (window.confirm(`Remove blog ${blog.title} by ${blog.author}`)) {
-      deleteBlog(blog.id)
+      deleteBlog(blog.id);
     }
-  }
+  };
 
   return (
     <div className="blog">
@@ -51,7 +51,7 @@ const Blog = ({ username, blog, updateLikes, deleteBlog }) => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default Blog
+export default Blog;

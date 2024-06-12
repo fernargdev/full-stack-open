@@ -20,7 +20,7 @@ module.exports = {
     indent: ['error', 2],
     'linebreak-style': 0,
     quotes: ['error', 'single'],
-    semi: ['error', 'never'],
+    semi: ['error', 'always'],
     eqeqeq: 'error',
     'no-trailing-spaces': 'error',
     'object-curly-spacing': ['error', 'always'],
@@ -30,4 +30,4 @@ module.exports = {
     'react/prop-types': 0,
     'no-unused-vars': 0,
   },
-}
+};

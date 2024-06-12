@@ -8,13 +8,15 @@
     "dev": "nodemon index.js",
     "test": "jest --verbose",
     "lint": "eslint .",
-    "test:start": "NODE_ENV=test node index.js"
+    "test:start": "NODE_ENV=test node index.js",
+    "format": "prettier --write ."
   },
   "author": "Fernando Angel Rodriguez Gonzalez",
   "license": "ISC",
   "devDependencies": {
     "jest": "^27.5.1",
     "nodemon": "^3.0.3",
+    "prettier": "^3.3.2",
     "supertest": "^6.3.4"
   },
   "dependencies": {

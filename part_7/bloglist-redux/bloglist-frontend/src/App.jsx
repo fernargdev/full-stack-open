@@ -1,5 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 
+import { useDispatch } from 'react-redux';
+import { createNotification } from './reducers/notificationReducer';
+
 import blogService from './services/blogs';
 import loginService from './services/login';
 
@@ -12,22 +15,14 @@ import LoginForm from './components/LoginForm';
 const App = () => {
   const [blogs, setBlogs] = useState([]);
   const [user, setUser] = useState(null);
-  const [message, setMessage] = useState(null);
+
+  const dispatch = useDispatch();
 
   const blogFormRef = useRef();
 
   useEffect(() => {
     blogService.getAll().then((blogs) => setBlogs(blogs));
   }, []);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setMessage(null);
-    }, 3000);
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [message]);
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser');
@@ -47,16 +42,16 @@ const App = () => {
       window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user));
       blogService.setToken(user.token);
       setUser(user);
-      setMessage(`logged in as ${user.name}`);
+      dispatch(createNotification(`Logged in as ${user.name}`));
     } catch (err) {
-      setMessage(`Error: ${err.response.data.error}`);
+      dispatch(createNotification(`Error: ${err.response.data.error}`));
     }
   };
 
   const handleLogout = () => {
     window.localStorage.removeItem('loggedBlogappUser');
     setUser(null);
-    setMessage('logged out');
+    dispatch(createNotification('logged out'));
   };
 
   const createBlog = async (blogObject) => {
@@ -64,11 +59,14 @@ const App = () => {
       blogFormRef.current.toggleVisibility();
       const returnedBlog = await blogService.create(blogObject);
       setBlogs(blogs.concat(returnedBlog));
-      setMessage(
-        `a new blog ${returnedBlog.title} by ${returnedBlog.author} added`
+
+      dispatch(
+        createNotification(
+          `a new blog ${returnedBlog.title} by ${returnedBlog.author} added`
+        )
       );
     } catch (err) {
-      setMessage(`Error: ${err.response.data.error}`);
+      dispatch(createNotification(`Error: ${err.response.data.error}`));
     }
   };
 
@@ -80,7 +78,7 @@ const App = () => {
       );
       setBlogs(newBlogs);
     } catch (err) {
-      setMessage(`Error: ${err.response.data.error}`);
+      dispatch(createNotification(`Error: ${err.response.data.error}`));
     }
   };
 
@@ -89,16 +87,16 @@ const App = () => {
       await blogService.deleteBlog(blogId);
       const newBlogs = blogs.filter((blog) => blog.id !== blogId);
       setBlogs(newBlogs);
-      setMessage('blog deleted');
+      dispatch(createNotification('blog deleted'));
     } catch (err) {
-      setMessage(`Error: ${err.response.data.error}`);
+      dispatch(createNotification(`Error: ${err.response.data.error}`));
     }
   };
 
   return (
     <div>
       <h1>Blogs</h1>
-      <Notification message={message} />
+      <Notification />
       {user === null ? (
         <LoginForm handleLogin={handleLogin} />
       ) : (

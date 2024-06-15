@@ -1,12 +1,10 @@
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 
 import { readBlog } from './reducers/blogsReducer';
 import { createNotification } from './reducers/notificationReducer';
-
-import blogService from './services/blogs';
-import loginService from './services/login';
+import { logoutUser, readUser } from './reducers/userReducer';
 
 import Notification from './components/Notification';
 import Togglable from './components/Togglable';
@@ -15,12 +13,11 @@ import BlogForm from './components/BlogForm';
 import LoginForm from './components/LoginForm';
 
 const App = () => {
-  const blogFormRef = useRef();
-
   const dispatch = useDispatch();
   const blogs = useSelector((state) => state.blogs.data);
+  const user = useSelector((state) => state.user.user);
 
-  const [user, setUser] = useState(null);
+  const blogFormRef = useRef();
 
   useEffect(() => {
     dispatch(readBlog());
@@ -29,31 +26,18 @@ const App = () => {
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser');
     if (loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON);
-      blogService.setToken(user.token);
-      setUser(user);
+      dispatch(readUser(loggedUserJSON));
     }
-  }, []);
-
-  const handleLogin = async (username, password) => {
-    try {
-      const user = await loginService.login({
-        username,
-        password,
-      });
-      window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user));
-      blogService.setToken(user.token);
-      setUser(user);
-      dispatch(createNotification(`Logged in as ${user.name}`));
-    } catch (err) {
-      dispatch(createNotification(`Error: ${err.response.data.error}`));
-    }
-  };
+  }, [dispatch]);
 
   const handleLogout = () => {
-    window.localStorage.removeItem('loggedBlogappUser');
-    setUser(null);
-    dispatch(createNotification('Logged out'));
+    try {
+      dispatch(logoutUser());
+      dispatch(createNotification('Logged out'));
+    } catch (err) {
+      console.log(err);
+      dispatch(createNotification(`Error: ${err.response}`));
+    }
   };
 
   return (
@@ -63,7 +47,7 @@ const App = () => {
       <Notification />
 
       {user === null ? (
-        <LoginForm handleLogin={handleLogin} />
+        <LoginForm />
       ) : (
         <div>
           <p>

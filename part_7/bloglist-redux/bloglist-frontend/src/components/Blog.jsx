@@ -1,24 +1,41 @@
 import { useState } from 'react';
 
-const Blog = ({ username, blog, updateLikes, deleteBlog }) => {
+import { useDispatch } from 'react-redux';
+
+import { updateBlog, deleteBlog } from '../reducers/blogsReducer';
+import { createNotification } from '../reducers/notificationReducer';
+
+const Blog = ({ username, blog }) => {
   const [detailsVisible, setDetailsVisible] = useState(false);
+
+  const dispatch = useDispatch();
 
   const toggleDetails = () => {
     setDetailsVisible(!detailsVisible);
   };
 
   const handleLike = async () => {
-    const blogToUpdate = {
+    const newBlog = {
       ...blog,
       user: blog.user.id,
       likes: blog.likes + 1,
     };
-    updateLikes(blogToUpdate);
+
+    try {
+      dispatch(updateBlog(newBlog.id, newBlog));
+    } catch (err) {
+      dispatch(createNotification(`Error: ${err.response.data.error}`));
+    }
   };
 
   const handleDelete = async () => {
     if (window.confirm(`Remove blog ${blog.title} by ${blog.author}`)) {
-      deleteBlog(blog.id);
+      try {
+        dispatch(deleteBlog(blog.id));
+        dispatch(createNotification('blog deleted'));
+      } catch (err) {
+        dispatch(createNotification(`Error: ${err.response.data.error}`));
+      }
     }
   };
 

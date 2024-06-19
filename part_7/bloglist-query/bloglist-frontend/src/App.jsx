@@ -2,13 +2,12 @@ import { useEffect, useRef } from 'react';
 
 // react-redux
 import { useDispatch, useSelector } from 'react-redux';
-import { readBlog } from './reducers/blogsReducer';
 import { logoutUser, readUser } from './reducers/userReducer';
-// import { createNotification } from './reducers/notificationReducer';
 
 // react-query
-import { useQueryClient, useMutation } from '@tanstack/react-query';
+import { useQueryClient, useMutation, useQuery } from '@tanstack/react-query';
 import { useNotificationDispatch } from './NotificationContext';
+import blogService from './services/blogs';
 
 import Notification from './components/Notification';
 import Togglable from './components/Togglable';
@@ -19,18 +18,14 @@ import LoginForm from './components/LoginForm';
 const App = () => {
   // react-redux
   const dispatch = useDispatch();
-  const blogs = useSelector((state) => state.blogs.data);
   const user = useSelector((state) => state.user.user);
+
+  const blogFormRef = useRef();
 
   // react-query
   const queryClient = useQueryClient();
   const notificationDispatch = useNotificationDispatch();
-
-  const blogFormRef = useRef();
-
-  useEffect(() => {
-    dispatch(readBlog());
-  }, [dispatch]);
+  const readBlog = blogService.getAll;
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser');
@@ -56,6 +51,20 @@ const App = () => {
       });
     }
   };
+
+  const result = useQuery({
+    queryKey: ['blogs'],
+    queryFn: readBlog,
+    refetchOnWindowFocus: false,
+    retry: 2,
+  });
+
+  if (result.isLoading) return <div>Loading data...</div>;
+
+  if (result.isError)
+    return <div>Blog service not available due to problems in server</div>;
+
+  const blogs = result.data;
 
   return (
     <div>

@@ -1,25 +1,36 @@
 import { useState } from 'react';
 
-// react-redux
-import { useDispatch } from 'react-redux';
-import { createBlog } from '../reducers/blogsReducer';
-// import { createNotification } from '../reducers/notificationReducer';
-
-// react-query
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 import { useNotificationDispatch } from '../NotificationContext';
+import blogService from '../services/blogs';
 
 const BlogForm = () => {
+  const createBlog = blogService.create;
+
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [url, setUrl] = useState('');
 
-  // react-redux
-  const dispatch = useDispatch();
-
-  // react-query
   const queryClient = useQueryClient();
   const notificationDispatch = useNotificationDispatch();
+
+  const newBlogMutation = useMutation({
+    mutationFn: createBlog,
+    onSuccess: (newBlog) => {
+      const blogs = queryClient.getQueryData(['blogs']);
+      queryClient.setQueryData(['blogs'], blogs.concat(newBlog));
+      notificationDispatch({
+        type: 'SET_NOTIFICATION',
+        payload: `a new blog ${newBlog.title} by ${newBlog.author} added`,
+      });
+    },
+    onError: (err) => {
+      notificationDispatch({
+        type: 'SET_NOTIFICATION',
+        payload: `Error: ${err.response.data.error}`,
+      });
+    },
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,23 +40,11 @@ const BlogForm = () => {
       url: url,
     };
 
-    try {
-      dispatch(createBlog(newBlog));
-      notificationDispatch({
-        type: 'SET_NOTIFICATION',
-        payload: `a new blog ${newBlog.title} by ${newBlog.author} added`,
-      });
+    setTitle('');
+    setAuthor('');
+    setUrl('');
 
-      setTitle('');
-      setAuthor('');
-      setUrl('');
-    } catch (err) {
-      // dispatch(createNotification(`Error: ${err.response.data.error}`));
-      notificationDispatch({
-        type: 'SET_NOTIFICATION',
-        payload: `Error: ${err.response.data.error}`,
-      });
-    }
+    newBlogMutation.mutate(newBlog);
   };
 
   return (

@@ -1,24 +1,43 @@
 import { useState } from 'react';
+
+// react-redux
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../reducers/userReducer';
-import { createNotification } from '../reducers/notificationReducer';
+// import { createNotification } from '../reducers/notificationReducer';
+
+// react-query
+import { useQueryClient, useMutation } from '@tanstack/react-query';
+import { useNotificationDispatch } from '../NotificationContext';
 
 const LoginForm = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
+  // react-redux
   const dispatch = useDispatch();
+
+  // react-query
+  const queryClient = useQueryClient();
+  const notificationDispatch = useNotificationDispatch();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
       dispatch(loginUser(username, password));
-      dispatch(createNotification(`Logged in as ${username}`));
+      // dispatch(createNotification(`Logged in as ${username}`));
+      notificationDispatch({
+        type: 'SET_NOTIFICATION',
+        payload: `Logged in as ${username}`,
+      });
       setUsername('');
       setPassword('');
     } catch (err) {
       console.log(err);
-      dispatch(createNotification(`Error: ${err.response}`));
+      // dispatch(createNotification(`Error: ${err.response}`));
+      notificationDispatch({
+        type: 'SET_NOTIFICATION',
+        payload: `Error: ${err.response.data.error}`,
+      });
     }
   };
 

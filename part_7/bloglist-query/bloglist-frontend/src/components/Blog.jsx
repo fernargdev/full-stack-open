@@ -1,14 +1,23 @@
 import { useState } from 'react';
 
+// react-redux
 import { useDispatch } from 'react-redux';
-
 import { updateBlog, deleteBlog } from '../reducers/blogsReducer';
-import { createNotification } from '../reducers/notificationReducer';
+// import { createNotification } from '../reducers/notificationReducer';
+
+// react-query
+import { useQueryClient, useMutation } from '@tanstack/react-query';
+import { useNotificationDispatch } from '../NotificationContext';
 
 const Blog = ({ username, blog }) => {
   const [detailsVisible, setDetailsVisible] = useState(false);
 
+  // react-redux
   const dispatch = useDispatch();
+
+  // react-query
+  const queryClient = useQueryClient();
+  const notificationDispatch = useNotificationDispatch();
 
   const toggleDetails = () => {
     setDetailsVisible(!detailsVisible);
@@ -24,7 +33,12 @@ const Blog = ({ username, blog }) => {
     try {
       dispatch(updateBlog(newBlog.id, newBlog));
     } catch (err) {
-      dispatch(createNotification(`Error: ${err.response.data.error}`));
+      // dispatch(createNotification(`Error: ${err.response.data.error}`));
+      console.log(err);
+      notificationDispatch({
+        type: 'SET_NOTIFICATION',
+        payload: `Error: ${err.response.data.error}`,
+      });
     }
   };
 
@@ -32,9 +46,18 @@ const Blog = ({ username, blog }) => {
     if (window.confirm(`Remove blog ${blog.title} by ${blog.author}`)) {
       try {
         dispatch(deleteBlog(blog.id));
-        dispatch(createNotification('blog deleted'));
+        // dispatch(createNotification('blog deleted'));
+        notificationDispatch({
+          type: 'SET_NOTIFICATION',
+          payload: 'blog deleted',
+        });
       } catch (err) {
-        dispatch(createNotification(`Error: ${err.response.data.error}`));
+        // dispatch(createNotification(`Error: ${err.response.data.error}`));
+        console.log(err);
+        notificationDispatch({
+          type: 'SET_NOTIFICATION',
+          payload: `Error: ${err.response.data.error}`,
+        });
       }
     }
   };

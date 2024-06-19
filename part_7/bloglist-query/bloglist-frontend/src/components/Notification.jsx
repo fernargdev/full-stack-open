@@ -1,7 +1,7 @@
-import { useSelector } from 'react-redux';
+import { useNotificationValue } from '../NotificationContext';
 
 const Notification = () => {
-  const message = useSelector((state) => state.notification.message);
+  const message = useNotificationValue();
 
   if (message === '') return null;
 

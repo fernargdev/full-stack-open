@@ -1,16 +1,25 @@
 import { useState } from 'react';
 
+// react-redux
 import { useDispatch } from 'react-redux';
-
 import { createBlog } from '../reducers/blogsReducer';
-import { createNotification } from '../reducers/notificationReducer';
+// import { createNotification } from '../reducers/notificationReducer';
+
+// react-query
+import { useQueryClient, useMutation } from '@tanstack/react-query';
+import { useNotificationDispatch } from '../NotificationContext';
 
 const BlogForm = () => {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [url, setUrl] = useState('');
 
+  // react-redux
   const dispatch = useDispatch();
+
+  // react-query
+  const queryClient = useQueryClient();
+  const notificationDispatch = useNotificationDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,17 +31,20 @@ const BlogForm = () => {
 
     try {
       dispatch(createBlog(newBlog));
-      dispatch(
-        createNotification(
-          `a new blog ${newBlog.title} by ${newBlog.author} added`
-        )
-      );
+      notificationDispatch({
+        type: 'SET_NOTIFICATION',
+        payload: `a new blog ${newBlog.title} by ${newBlog.author} added`,
+      });
 
       setTitle('');
       setAuthor('');
       setUrl('');
     } catch (err) {
-      dispatch(createNotification(`Error: ${err.response.data.error}`));
+      // dispatch(createNotification(`Error: ${err.response.data.error}`));
+      notificationDispatch({
+        type: 'SET_NOTIFICATION',
+        payload: `Error: ${err.response.data.error}`,
+      });
     }
   };
 

@@ -1,27 +1,44 @@
 import { useState } from 'react';
 
-// react-redux
-import { useDispatch } from 'react-redux';
-import { updateBlog, deleteBlog } from '../reducers/blogsReducer';
-// import { createNotification } from '../reducers/notificationReducer';
-
-// react-query
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 import { useNotificationDispatch } from '../NotificationContext';
+import blogService from '../services/blogs';
 
 const Blog = ({ username, blog }) => {
+  const updateBlog = blogService.update;
+  const deleteBlog = blogService.eliminate;
+
   const [detailsVisible, setDetailsVisible] = useState(false);
 
-  // react-redux
-  const dispatch = useDispatch();
-
-  // react-query
   const queryClient = useQueryClient();
   const notificationDispatch = useNotificationDispatch();
 
   const toggleDetails = () => {
     setDetailsVisible(!detailsVisible);
   };
+
+  const updateBlogMutation = useMutation({
+    mutationFn: updateBlog,
+    onSuccess: (newBlog) => {
+      const blogs = queryClient.getQueryData(['blogs']);
+      const updatedBlogs = blogs.map((blog) =>
+        blog.id === newBlog.id ? newBlog : blog
+      );
+      queryClient.setQueryData(['blogs'], updatedBlogs);
+
+      notificationDispatch({
+        type: 'SET_NOTIFICATION',
+        payload: `You add one like for ${newBlog.title}`,
+      });
+    },
+    onError: (err) => {
+      console.log(err);
+      notificationDispatch({
+        type: 'SET_NOTIFICATION',
+        payload: `Error: ${err.response.data.error}`,
+      });
+    },
+  });
 
   const handleLike = async () => {
     const newBlog = {
@@ -30,35 +47,32 @@ const Blog = ({ username, blog }) => {
       likes: blog.likes + 1,
     };
 
-    try {
-      dispatch(updateBlog(newBlog.id, newBlog));
-    } catch (err) {
-      // dispatch(createNotification(`Error: ${err.response.data.error}`));
-      console.log(err);
+    updateBlogMutation.mutate(newBlog);
+  };
+
+  const deleteBlogMutation = useMutation({
+    mutationFn: deleteBlog,
+    onSuccess: () => {
+      const currentBlogs = queryClient.getQueryData(['blogs']);
+      const updatedBlogs = currentBlogs.filter((b) => b.id !== blog.id);
+      queryClient.setQueryData(['blogs'], updatedBlogs);
+
+      notificationDispatch({
+        type: 'SET_NOTIFICATION',
+        payload: `You deleted: ${blog.title}`,
+      });
+    },
+    onError: (err) => {
       notificationDispatch({
         type: 'SET_NOTIFICATION',
         payload: `Error: ${err.response.data.error}`,
       });
-    }
-  };
+    },
+  });
 
-  const handleDelete = async () => {
+  const handleDelete = () => {
     if (window.confirm(`Remove blog ${blog.title} by ${blog.author}`)) {
-      try {
-        dispatch(deleteBlog(blog.id));
-        // dispatch(createNotification('blog deleted'));
-        notificationDispatch({
-          type: 'SET_NOTIFICATION',
-          payload: 'blog deleted',
-        });
-      } catch (err) {
-        // dispatch(createNotification(`Error: ${err.response.data.error}`));
-        console.log(err);
-        notificationDispatch({
-          type: 'SET_NOTIFICATION',
-          payload: `Error: ${err.response.data.error}`,
-        });
-      }
+      deleteBlogMutation.mutate(blog.id);
     }
   };
 

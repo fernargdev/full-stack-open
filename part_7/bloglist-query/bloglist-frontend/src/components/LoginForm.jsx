@@ -1,39 +1,43 @@
-import { useState } from 'react';
-
-// react-redux
-import { useDispatch } from 'react-redux';
-import { loginUser } from '../reducers/userReducer';
-// import { createNotification } from '../reducers/notificationReducer';
+import { useContext, useState } from 'react';
 
 // react-query
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 import { useNotificationDispatch } from '../NotificationContext';
+import loginService from '../services/login';
+import blogService from '../services/blogs';
+import UserContext from '../UserContext';
 
 const LoginForm = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  // react-redux
-  const dispatch = useDispatch();
-
   // react-query
   const queryClient = useQueryClient();
   const notificationDispatch = useNotificationDispatch();
+  const [user, userDispatch] = useContext(UserContext);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      dispatch(loginUser(username, password));
-      // dispatch(createNotification(`Logged in as ${username}`));
+      const user = await loginService.login({
+        username,
+        password,
+      });
+
+      window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user));
+      blogService.setToken(user.token);
+      userDispatch({ type: 'LOGIN', payload: user });
+
       notificationDispatch({
         type: 'SET_NOTIFICATION',
         payload: `Logged in as ${username}`,
       });
+
       setUsername('');
       setPassword('');
     } catch (err) {
       console.log(err);
-      // dispatch(createNotification(`Error: ${err.response}`));
+
       notificationDispatch({
         type: 'SET_NOTIFICATION',
         payload: `Error: ${err.response.data.error}`,

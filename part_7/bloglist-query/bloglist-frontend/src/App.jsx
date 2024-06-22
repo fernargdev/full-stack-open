@@ -1,10 +1,5 @@
-import { useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 
-// react-redux
-import { useDispatch, useSelector } from 'react-redux';
-import { logoutUser, readUser } from './reducers/userReducer';
-
-// react-query
 import { useQueryClient, useMutation, useQuery } from '@tanstack/react-query';
 import { useNotificationDispatch } from './NotificationContext';
 import blogService from './services/blogs';
@@ -14,37 +9,36 @@ import Togglable from './components/Togglable';
 import Blog from './components/Blog';
 import BlogForm from './components/BlogForm';
 import LoginForm from './components/LoginForm';
+import UserContext from './UserContext';
 
 const App = () => {
-  // react-redux
-  const dispatch = useDispatch();
-  const user = useSelector((state) => state.user.user);
-
   const blogFormRef = useRef();
 
-  // react-query
-  const queryClient = useQueryClient();
   const notificationDispatch = useNotificationDispatch();
   const readBlog = blogService.getAll;
 
+  const [user, userDispatch] = useContext(UserContext);
+
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser');
+
     if (loggedUserJSON) {
-      dispatch(readUser(loggedUserJSON));
+      const user = JSON.parse(loggedUserJSON);
+      userDispatch({ type: 'LOGIN', payload: user });
+      blogService.setToken(user.token);
     }
-  }, [dispatch]);
+  }, [userDispatch]);
 
   const handleLogout = () => {
     try {
-      dispatch(logoutUser());
-      // dispatch(createNotification('Logged out'));
+      window.localStorage.removeItem('loggedBlogappUser');
+      userDispatch({ type: 'LOGOUT' });
       notificationDispatch({
         type: 'SET_NOTIFICATION',
         payload: 'Logged out',
       });
     } catch (err) {
       console.log(err);
-      // dispatch(createNotification(`Error: ${err.response}`));
       notificationDispatch({
         type: 'SET_NOTIFICATION',
         payload: `Error: ${err.response}`,

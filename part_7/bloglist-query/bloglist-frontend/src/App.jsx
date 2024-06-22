@@ -1,6 +1,6 @@
 import { useContext, useEffect, useRef } from 'react';
 
-import { useQueryClient, useMutation, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useNotificationDispatch } from './NotificationContext';
 import blogService from './services/blogs';
 

@@ -1,7 +1,5 @@
 import { useContext, useState } from 'react';
 
-// react-query
-import { useQueryClient, useMutation } from '@tanstack/react-query';
 import { useNotificationDispatch } from '../NotificationContext';
 import loginService from '../services/login';
 import blogService from '../services/blogs';
@@ -11,8 +9,6 @@ const LoginForm = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  // react-query
-  const queryClient = useQueryClient();
   const notificationDispatch = useNotificationDispatch();
   const [user, userDispatch] = useContext(UserContext);
 

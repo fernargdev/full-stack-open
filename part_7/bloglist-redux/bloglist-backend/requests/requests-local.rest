@@ -37,9 +37,9 @@ POST {{api}}/users
 Content-Type: application/json
 
 {
-  "username": "fernadev",
-  "name": "Fernando Rodriguez",
-  "password": "Fernando1234"
+  "username": "Venla",
+  "name": "Venla Ruuska",
+  "password": "Ruuska"
 }
 
 ### DELETE api/users

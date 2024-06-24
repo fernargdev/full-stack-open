@@ -16,15 +16,23 @@ import LoginForm from './components/LoginForm';
 import HomePage from './pages/HomePage';
 import UserPage from './pages/UserPage';
 import UserDetailsPage from './pages/UserDetailsPage';
+import BlogsDetailsPage from './pages/BlogsDetailsPage';
+import { readBlog } from './reducers/blogsReducer';
 
 const App = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
   const users = useSelector((state) => state.users);
+  const blogs = useSelector((state) => state.blogs.data);
 
   useEffect(() => {
     dispatch(getAllUsers());
+    dispatch(readBlog());
   }, [dispatch]);
+
+  // useEffect(() => {
+  //   dispatch(readBlog());
+  // }, [dispatch]);
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser');
@@ -71,6 +79,10 @@ const App = () => {
             <Route
               path="/users/:id"
               element={<UserDetailsPage users={users} />}
+            />
+            <Route
+              path="/blogs/:id"
+              element={<BlogsDetailsPage blogs={blogs} />}
             />
           </Routes>
         </div>

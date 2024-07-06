@@ -5,7 +5,7 @@ import { Routes, Route } from 'react-router-dom';
 // reducers
 import { getAllBlog } from './reducers/blogReducer';
 import { createNotification } from './reducers/notificationReducer';
-import { logoutUser, readUser } from './reducers/userReducer';
+import { initializeUser, logoutUser } from './reducers/authReducer';
 import { getAllUsers } from './reducers/usersReducer';
 
 // components
@@ -22,18 +22,12 @@ import Navigation from './components/Navigation';
 
 const App = () => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user.user);
+  const user = useSelector((state) => state.auth.user);
 
   useEffect(() => {
+    dispatch(initializeUser());
     dispatch(getAllUsers());
     dispatch(getAllBlog());
-  }, [dispatch]);
-
-  useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser');
-    if (loggedUserJSON) {
-      dispatch(readUser(loggedUserJSON));
-    }
   }, [dispatch]);
 
   const handleLogout = () => {

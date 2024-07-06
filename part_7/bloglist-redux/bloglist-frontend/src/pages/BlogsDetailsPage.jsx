@@ -1,26 +1,36 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { updateBlog } from '../reducers/blogReducer';
+import { createNotification } from '../reducers/notificationReducer';
 
-const BlogsDetailsPage = ({ blogs }) => {
+const BlogsDetailsPage = () => {
   const dispatch = useDispatch();
 
   const id = useParams().id;
-  //   console.log('id', id);
 
+  const blogs = useSelector((state) => state.blogs.data);
   const blog = blogs.find((n) => n.id === String(id));
 
   if (!blog) {
     return null;
   }
 
-  //   console.log('blog', blog);
-
-  //   TODO:
   const handleLike = () => {
-    console.log('like');
-  };
+    const newwBlog = {
+      ...blog,
+      likes: blog.likes + 1,
+    };
 
-  //   console.log(blog.user);
+    try {
+      dispatch(updateBlog(newwBlog));
+      dispatch(
+        createNotification(`You added one like for "${newwBlog.title}"`)
+      );
+    } catch (err) {
+      console.log(err);
+      dispatch(createNotification(`Error: ${err.response.data.error}`));
+    }
+  };
 
   return (
     <div>

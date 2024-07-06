@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import BlogForm from './BlogForm';
+import BlogForm from '../components/BlogForm';
 
 describe('BlogForm Component', () => {
   test('the form calls the event handler which received as props with correct details', async () => {

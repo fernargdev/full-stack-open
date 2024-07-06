@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
-
 import { useDispatch, useSelector } from 'react-redux';
+import { Routes, Route } from 'react-router-dom';
 
+// reducers
+import { getAllBlog } from './reducers/blogReducer';
 import { createNotification } from './reducers/notificationReducer';
 import { logoutUser, readUser } from './reducers/userReducer';
 import { getAllUsers } from './reducers/usersReducer';
-
-import { Routes, Route, Link } from 'react-router-dom';
 
 // components
 import Notification from './components/Notification';
@@ -17,22 +17,17 @@ import HomePage from './pages/HomePage';
 import UserPage from './pages/UserPage';
 import UserDetailsPage from './pages/UserDetailsPage';
 import BlogsDetailsPage from './pages/BlogsDetailsPage';
-import { readBlog } from './reducers/blogsReducer';
+
+import Navigation from './components/Navigation';
 
 const App = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
-  const users = useSelector((state) => state.users);
-  const blogs = useSelector((state) => state.blogs.data);
 
   useEffect(() => {
     dispatch(getAllUsers());
-    dispatch(readBlog());
+    dispatch(getAllBlog());
   }, [dispatch]);
-
-  // useEffect(() => {
-  //   dispatch(readBlog());
-  // }, [dispatch]);
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser');
@@ -61,43 +56,13 @@ const App = () => {
         <LoginForm />
       ) : (
         <div>
-          <table>
-            <tbody>
-              <tr>
-                <td>
-                  <Link to={'/'}>Home</Link>
-                </td>
-
-                <td>
-                  <Link to={'/blogs'}>Blogs</Link>
-                </td>
-                <td>
-                  <Link to={'/users'}>Users</Link>
-                </td>
-
-                <td>
-                  <p>
-                    {user.name} logged in
-                    <button type="button" onClick={handleLogout}>
-                      logout
-                    </button>
-                  </p>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <Navigation user={user} handleLogout={handleLogout} />
 
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/users" element={<UserPage users={users} />} />
-            <Route
-              path="/users/:id"
-              element={<UserDetailsPage users={users} />}
-            />
-            <Route
-              path="/blogs/:id"
-              element={<BlogsDetailsPage blogs={blogs} />}
-            />
+            <Route path="/users" element={<UserPage />} />
+            <Route path="/users/:id" element={<UserDetailsPage />} />
+            <Route path="/blogs/:id" element={<BlogsDetailsPage />} />
           </Routes>
         </div>
       )}

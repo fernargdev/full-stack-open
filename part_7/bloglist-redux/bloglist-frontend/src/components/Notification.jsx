@@ -1,15 +1,17 @@
 import { useSelector } from 'react-redux';
 
 const Notification = () => {
-  const message = useSelector((state) => state.notification.message);
+  const data = useSelector((state) => state.notifications.data);
 
-  if (message === '') return null;
-
-  if (message.includes('Error:')) {
-    return <div className="error">{message}</div>;
+  if (!data) {
+    return null;
   }
 
-  return <div className="note">{message}</div>;
+  if (data.includes('Error:')) {
+    return <div className="error">{data}</div>;
+  }
+
+  return <div className="note">{data}</div>;
 };
 
 export default Notification;

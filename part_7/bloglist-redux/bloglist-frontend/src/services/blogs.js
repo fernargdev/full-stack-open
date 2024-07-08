@@ -35,4 +35,9 @@ const eliminate = async (id) => {
   return res.data;
 };
 
-export default { setToken, getAll, create, update, eliminate };
+const getComments = async (id) => {
+  const res = await axios.get(`${baseUrl}/${id}/comments`);
+  return res.data;
+};
+
+export default { setToken, getAll, create, update, eliminate, getComments };

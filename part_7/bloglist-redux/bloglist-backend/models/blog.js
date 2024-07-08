@@ -9,6 +9,10 @@ const schema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   },
+  comment: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Comment',
+  },
 });
 
 schema.set('toJSON', {

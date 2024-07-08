@@ -1,11 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-// reducers
 import notificationReducer from './reducers/notificationReducer';
 import blogReducer from './reducers/blogReducer';
-
 import authReducer from './reducers/authReducer';
 import usersReducer from './reducers/usersReducer';
+import commentReducer from './reducers/commentReducer';
 
 const store = configureStore({
   reducer: {
@@ -13,11 +12,8 @@ const store = configureStore({
     blogs: blogReducer,
     auth: authReducer,
     users: usersReducer,
+    comments: commentReducer,
   },
 });
-
-// store.subscribe(() => {
-//   console.log(store.getState());
-// });
 
 export default store;

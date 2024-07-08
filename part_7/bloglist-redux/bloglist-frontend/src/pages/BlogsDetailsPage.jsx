@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { updateBlog } from '../reducers/blogReducer';
 import { createNotification } from '../reducers/notificationReducer';
+import BlogComments from '../components/BlogComments';
 
 const BlogsDetailsPage = () => {
   const dispatch = useDispatch();
@@ -42,6 +43,7 @@ const BlogsDetailsPage = () => {
         {blog.likes} likes <button onClick={handleLike}>like</button>
       </p>
       <p>added by {blog.user !== null && blog.user.name}</p>
+      <BlogComments id={blog.id} />
     </div>
   );
 };

@@ -23,4 +23,11 @@ export const initializeComments = (id) => {
   };
 };
 
+export const createComment = (id, content) => {
+  return async (dispatch) => {
+    const newComment = await blogService.createComment(id, content);
+    dispatch(appendComment(newComment));
+  };
+};
+
 export default commentSlice.reducer;

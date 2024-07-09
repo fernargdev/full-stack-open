@@ -40,4 +40,18 @@ const getComments = async (id) => {
   return res.data;
 };
 
-export default { setToken, getAll, create, update, eliminate, getComments };
+const createComment = async (id, content) => {
+  const newComment = { content };
+  const res = await axios.post(`${baseUrl}/${id}/comments`, newComment);
+  return res.data;
+};
+
+export default {
+  setToken,
+  getAll,
+  create,
+  update,
+  eliminate,
+  getComments,
+  createComment,
+};

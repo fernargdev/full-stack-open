@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 
 import { initializeComments } from '../reducers/commentReducer';
+import CommentForm from './CommentForm';
 
 const BlogComments = ({ id }) => {
   const commentStyle = {
@@ -25,14 +26,15 @@ const BlogComments = ({ id }) => {
   //   console.log(comments);
 
   return (
-    <h3>
-      comments
+    <div>
+      <h3>comments</h3>
+      <CommentForm id={id} />
       {comments.map((c) => (
         <li key={c.id} style={commentStyle}>
           {c.content}
         </li>
       ))}
-    </h3>
+    </div>
   );
 };
 

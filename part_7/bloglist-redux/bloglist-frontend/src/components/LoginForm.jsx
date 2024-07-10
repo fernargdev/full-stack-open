@@ -22,34 +22,35 @@ const LoginForm = () => {
   };
 
   return (
-    <div>
+    <form onSubmit={handleSubmit}>
       <h2>Log in to application</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          username
-          <input
-            type="text"
-            name="Username"
-            data-testid="username"
-            autoComplete="username"
-            value={username}
-            onChange={({ target }) => setUsername(target.value)}
-          />
-        </div>
-        <div>
-          password
-          <input
-            type="password"
-            name="Password"
-            data-testid="password"
-            autoComplete="current-password"
-            value={password}
-            onChange={({ target }) => setPassword(target.value)}
-          />
-        </div>
-        <button type="submit">login</button>
-      </form>
-    </div>
+
+      <label>
+        Username:
+        <input
+          type="text"
+          name="Username"
+          data-testid="username"
+          autoComplete="username"
+          value={username}
+          onChange={({ target }) => setUsername(target.value)}
+        />
+      </label>
+
+      <label>
+        Password:
+        <input
+          type="password"
+          name="Password"
+          data-testid="password"
+          autoComplete="current-password"
+          value={password}
+          onChange={({ target }) => setPassword(target.value)}
+        />
+      </label>
+
+      <button type="submit">Login</button>
+    </form>
   );
 };
 

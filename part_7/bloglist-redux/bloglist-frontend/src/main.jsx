@@ -4,7 +4,8 @@ import ReactDOM from 'react-dom/client';
 
 // app
 import App from './App';
-import GlobalStyles from './styles/Global';
+// import './styles/index.css';
+import GlobalStyles from './styles/Global.styled';
 
 // redux
 import { Provider } from 'react-redux';

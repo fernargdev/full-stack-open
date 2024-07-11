@@ -1,60 +1,50 @@
-import { createSlice } from '@reduxjs/toolkit';
-import blogService from '../services/blogs';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import Blog from '../components/Blog';
 
-const blogSlice = createSlice({
-  name: 'blog',
-  initialState: {
-    data: [],
-  },
-  reducers: {
-    setBlog(state, action) {
-      state.data = action.payload;
+describe('Blog Component', () => {
+  const blog = {
+    title: 'Test blog',
+    author: 'Test author',
+    url: 'http://test.com',
+    likes: 10,
+    user: {
+      username: 'test username',
+      name: 'test name',
     },
-    addBlog(state, action) {
-      state.data = state.data.concat(action.payload);
-    },
-    removeBlog(state, action) {
-      state.data = state.data.filter((b) => b.id !== action.payload);
-    },
-  },
+  };
+  const likesMockHandler = vi.fn();
+
+  beforeEach(() => {
+    render(<Blog key={blog.id} blog={blog} updateLikes={likesMockHandler} />);
+  });
+
+  test('renders title and author, but not url and likes by default', () => {
+    expect(screen.getByText(blog.title)).toBeDefined();
+    expect(screen.getByText(blog.author)).toBeDefined();
+    expect(screen.queryByText(blog.url)).toBeNull();
+    expect(screen.queryByText('like')).toBeNull();
+  });
+
+  test('the url and likes are displayed when the button that controls the details is clicked', async () => {
+    const user = userEvent.setup();
+    const button = screen.getByText('view');
+    await user.click(button);
+
+    expect(screen.getByText(blog.url)).toBeDefined();
+    expect(screen.getByText('like')).toBeDefined();
+    expect(button).toHaveTextContent('hide');
+  });
+
+  test('the event handler that the component received as props is called twice', async () => {
+    const user = userEvent.setup();
+    const viewButton = screen.getByText('view');
+    await user.click(viewButton);
+
+    const likeButton = screen.getByText('like');
+    await user.click(likeButton);
+    await user.click(likeButton);
+
+    expect(likesMockHandler.mock.calls).toHaveLength(2);
+  });
 });
-
-export const { setBlog, addBlog, removeBlog } = blogSlice.actions;
-
-export const getAllBlog = () => {
-  return async (dispatch) => {
-    const blogs = await blogService.getAll();
-    dispatch(setBlog(blogs));
-  };
-};
-
-export const createBlog = (newBlog) => {
-  return async (dispatch) => {
-    const createdBlog = await blogService.create(newBlog);
-    dispatch(addBlog(createdBlog));
-  };
-};
-
-export const updateBlog = (newBlog) => {
-  return async (dispatch) => {
-    const id = newBlog.id;
-    const blogs = await blogService.getAll();
-    const updatedBlog = await blogService.update(newBlog);
-    const newBlogs = blogs.map((b) => (b.id !== id ? b : updatedBlog));
-    dispatch(setBlog(newBlogs));
-  };
-};
-
-// TODO:
-// export const addLikes = (blog) => {};
-
-export const deleteBlog = (id) => {
-  return async (dispatch) => {
-    const deletedBlog = await blogService.eliminate(id);
-    dispatch(removeBlog(deletedBlog.id));
-  };
-};
-
-const blogReducer = blogSlice.reducer;
-
-export default blogReducer;

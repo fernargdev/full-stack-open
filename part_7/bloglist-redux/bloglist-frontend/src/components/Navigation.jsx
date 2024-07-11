@@ -1,34 +1,34 @@
 import { Link } from 'react-router-dom';
+import { Nav } from '../styles/Components.styled';
 
 const Navigation = ({ user, handleLogout }) => {
   return (
-    <>
-      <table>
-        <tbody>
-          <tr>
-            <td>
-              <Link to={'/'}>Home</Link>
-            </td>
+    <header>
+      <section>
+        <h1>Blog App</h1>
 
-            <td>
-              <Link to={'/blogs'}>Blogs</Link>
-            </td>
-            <td>
-              <Link to={'/users'}>Users</Link>
-            </td>
+        <div>
+          <span>{user.name} logged in </span>
+          <button type="button" onClick={handleLogout}>
+            Logout
+          </button>
+        </div>
+      </section>
 
-            <td>
-              <p>
-                {user.name} logged in
-                <button type="button" onClick={handleLogout}>
-                  logout
-                </button>
-              </p>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </>
+      <Nav>
+        <div className="link">
+          <Link to={'/'}>Home</Link>
+        </div>
+
+        <div className="link">
+          <Link to={'/blogs'}>Blogs</Link>
+        </div>
+
+        <div className="link">
+          <Link to={'/users'}>Users</Link>
+        </div>
+      </Nav>
+    </header>
   );
 };
 

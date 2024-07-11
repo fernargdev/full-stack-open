@@ -1,6 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { createComment } from '../reducers/commentReducer';
 import { createNotification } from '../reducers/notificationReducer';
+import { CommentInput } from '../styles/Components.styled';
 
 const CommentForm = ({ id }) => {
   const dispatch = useDispatch();
@@ -19,12 +20,13 @@ const CommentForm = ({ id }) => {
   };
 
   return (
-    <div>
+    <section>
+      <h3>Comments: </h3>
       <form onSubmit={addComment}>
-        <input type="text" name="newCommetInput" />
+        <CommentInput type="text" name="newCommetInput" />
         <button type="submit">Add comment</button>
       </form>
-    </div>
+    </section>
   );
 };
 

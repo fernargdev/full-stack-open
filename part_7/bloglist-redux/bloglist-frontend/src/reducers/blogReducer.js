@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import blogService from '../services/blogs';
 
 const blogSlice = createSlice({
-  name: 'blogs',
+  name: 'blog',
   initialState: {
     data: [],
   },
@@ -13,43 +13,48 @@ const blogSlice = createSlice({
     addBlog(state, action) {
       state.data = state.data.concat(action.payload);
     },
+    removeBlog(state, action) {
+      state.data = state.data.filter((b) => b.id !== action.payload);
+    },
   },
 });
 
-export const { setBlog, addBlog } = blogSlice.actions;
+export const { setBlog, addBlog, removeBlog } = blogSlice.actions;
 
-export const createBlog = (blog) => {
-  return async (dispatch) => {
-    const newBlog = await blogService.create(blog);
-    dispatch(addBlog(newBlog));
-  };
-};
-
-export const readBlog = () => {
+export const getAllBlog = () => {
   return async (dispatch) => {
     const blogs = await blogService.getAll();
     dispatch(setBlog(blogs));
   };
 };
 
-export const updateBlog = (id, blog) => {
+export const createBlog = (newBlog) => {
   return async (dispatch) => {
-    const blogs = await blogService.getAll();
-    const updatedBlog = await blogService.update(id, blog);
-    dispatch(
-      setBlog(blogs.map((blog) => (blog.id !== id ? blog : updatedBlog)))
-    );
+    const createdBlog = await blogService.create(newBlog);
+    dispatch(addBlog(createdBlog));
   };
 };
+
+export const updateBlog = (newBlog) => {
+  return async (dispatch) => {
+    const id = newBlog.id;
+    const blogs = await blogService.getAll();
+    const updatedBlog = await blogService.update(newBlog);
+    const newBlogs = blogs.map((b) => (b.id !== id ? b : updatedBlog));
+    dispatch(setBlog(newBlogs));
+  };
+};
+
+// TODO:
+// export const addLikes = (blog) => {};
 
 export const deleteBlog = (id) => {
   return async (dispatch) => {
-    await blogService.deleteBlog(id);
-    const blogs = await blogService.getAll();
-    dispatch(setBlog(blogs));
+    const deletedBlog = await blogService.eliminate(id);
+    dispatch(removeBlog(deletedBlog.id));
   };
 };
 
-const blogsReducer = blogSlice.reducer;
+const blogReducer = blogSlice.reducer;
 
-export default blogsReducer;
+export default blogReducer;

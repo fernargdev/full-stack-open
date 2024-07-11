@@ -35,14 +35,21 @@ const BlogsDetailsPage = () => {
 
   return (
     <div>
-      <h2>
-        {blog.title} {blog.author}
-      </h2>
-      <a href={blog.url}>{blog.url}</a>
+      <h2>{blog.title}</h2>
+
+      <p>author: {blog.author}</p>
+
+      <p>
+        url:
+        <a href={blog.url}> {blog.url}</a>
+      </p>
+
       <p>
         {blog.likes} likes <button onClick={handleLike}>like</button>
       </p>
-      <p>added by {blog.user !== null && blog.user.name}</p>
+
+      <p>Added by {blog.user !== null && blog.user.name}</p>
+
       <BlogComments id={blog.id} />
     </div>
   );

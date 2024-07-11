@@ -1,3 +1,7 @@
+import { createGlobalStyle } from 'styled-components';
+
+const GlobalStyles = createGlobalStyle`
+
 :root {
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
   font-size: 16px;
@@ -24,16 +28,39 @@ a:hover {
 }
 
 body {
-  margin: 0;
-  display: grid;
-  place-items: center;
+  margin: 0 8vw 10vh 8vw;
+  display: flex;
+  justify-content: center;
   min-width: 320px;
+  max-width: 800px;
   min-height: 100vh;
+}
+
+header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+input {
+  width: 100%;
+}
+
+label {
+  width: 100%;
 }
 
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
+  text-align: center;
 }
 
 button {
@@ -46,7 +73,10 @@ button {
   background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
-  margin: 3px;
+  -webkit-transition: border-color 0.25s;
+  -moz-transition: border-color 0.25s;
+  -ms-transition: border-color 0.25s;
+  -o-transition: border-color 0.25s;
 }
 button:hover {
   border-color: #646cff;
@@ -54,34 +84,6 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
-}
-
-.note {
-  color: green;
-  background: lightgrey;
-  font-size: 20px;
-  border-style: solid;
-  border-radius: 5px;
-  padding: 10px;
-  margin-bottom: 10px;
-}
-
-.error {
-  color: red;
-  background: lightgrey;
-  font-size: 20px;
-  border-style: solid;
-  border-radius: 5px;
-  padding: 10px;
-  margin-bottom: 10px;
-}
-
-.blog {
-  padding-top: 10px;
-  padding-left: 2px;
-  border: solid;
-  border-width: 1px;
-  margin-bottom: 5px;
 }
 
 @media (prefers-color-scheme: light) {
@@ -96,3 +98,7 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+`;
+
+export default GlobalStyles;

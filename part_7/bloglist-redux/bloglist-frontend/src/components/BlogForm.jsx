@@ -4,6 +4,11 @@ import { useDispatch } from 'react-redux';
 import { createBlog } from '../reducers/blogReducer';
 import { createNotification } from '../reducers/notificationReducer';
 
+import {
+  BlogForm as BlogFormStyled,
+  FormButton,
+} from '../styles/Components.styled';
+
 const BlogForm = () => {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
@@ -36,42 +41,41 @@ const BlogForm = () => {
   };
 
   return (
-    <div>
+    // <div className="blogForm-container">
+    <BlogFormStyled onSubmit={handleSubmit}>
       <h2>Create new blog</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          title
-          <input
-            type="text"
-            name="Title"
-            data-testid="title"
-            value={title}
-            onChange={({ target }) => setTitle(target.value)}
-          />
-        </div>
-        <div>
-          author
-          <input
-            type="text"
-            name="Author"
-            data-testid="author"
-            value={author}
-            onChange={({ target }) => setAuthor(target.value)}
-          />
-        </div>
-        <div>
-          url
-          <input
-            type="url"
-            name="Url"
-            data-testid="url"
-            value={url}
-            onChange={({ target }) => setUrl(target.value)}
-          />
-        </div>
-        <button type="submit">create</button>
-      </form>
-    </div>
+      <label>
+        Title:
+        <input
+          type="text"
+          name="Title"
+          data-testid="title"
+          value={title}
+          onChange={({ target }) => setTitle(target.value)}
+        />
+      </label>
+      <label>
+        Author:
+        <input
+          type="text"
+          name="Author"
+          data-testid="author"
+          value={author}
+          onChange={({ target }) => setAuthor(target.value)}
+        />
+      </label>
+      <label>
+        Url:
+        <input
+          type="url"
+          name="Url"
+          data-testid="url"
+          value={url}
+          onChange={({ target }) => setUrl(target.value)}
+        />
+      </label>
+      <FormButton type="submit">Create</FormButton>
+    </BlogFormStyled>
   );
 };
 

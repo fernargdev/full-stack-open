@@ -1,5 +1,12 @@
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import {
+  UserDetails,
+  Username,
+  BlogHeader,
+  BlogsList,
+  BlogItem,
+} from '../styles/Components.styled';
 
 const UserDetailsPage = () => {
   const users = useSelector((state) => state.users);
@@ -11,15 +18,15 @@ const UserDetailsPage = () => {
   }
 
   return (
-    <div>
-      <h2>{user.username}</h2>
-      <h4>added blogs</h4>
-      <ul>
+    <UserDetails>
+      <Username>{user.username}</Username>
+      <BlogHeader>Added blogs:</BlogHeader>
+      <BlogsList>
         {user.blogs.map((blog) => (
-          <li key={blog.id}>{blog.title}</li>
+          <BlogItem key={blog.id}>{blog.title}</BlogItem>
         ))}
-      </ul>
-    </div>
+      </BlogsList>
+    </UserDetails>
   );
 };
 

@@ -41,9 +41,7 @@ const App = () => {
   };
 
   return (
-    <>
-      <h1>Blog App</h1>
-
+    <main>
       <Notification />
 
       {user === null ? (
@@ -60,7 +58,7 @@ const App = () => {
           </Routes>
         </div>
       )}
-    </>
+    </main>
   );
 };
 

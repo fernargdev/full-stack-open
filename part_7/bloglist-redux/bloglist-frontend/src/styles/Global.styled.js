@@ -32,7 +32,7 @@ body {
   display: flex;
   justify-content: center;
   min-width: 320px;
-  max-width: 800px;
+  // max-width: 800px;
   min-height: 100vh;
 }
 

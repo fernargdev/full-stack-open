@@ -45,9 +45,6 @@ export const updateBlog = (newBlog) => {
   };
 };
 
-// TODO:
-// export const addLikes = (blog) => {};
-
 export const deleteBlog = (id) => {
   return async (dispatch) => {
     const deletedBlog = await blogService.eliminate(id);

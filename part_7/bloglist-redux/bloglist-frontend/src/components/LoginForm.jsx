@@ -2,29 +2,31 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../reducers/authReducer';
 import { createNotification } from '../reducers/notificationReducer';
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    try {
-      dispatch(loginUser(username, password));
-      dispatch(createNotification(`Logged in as ${username}`));
-      setUsername('');
-      setPassword('');
-    } catch (err) {
-      dispatch(createNotification(`Error: ${err.response}`));
-    }
+    dispatch(loginUser(username, password))
+      .then((user) => {
+        dispatch(createNotification(`Logged in as ${user.username}`));
+        setUsername('');
+        setPassword('');
+        navigate('/');
+      })
+      .catch((err) => {
+        dispatch(createNotification(`Error: ${err.response.data.error}`));
+      });
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2>Log in to application</h2>
-
       <label>
         Username:
         <input
@@ -32,6 +34,7 @@ const LoginForm = () => {
           name="Username"
           data-testid="username"
           autoComplete="username"
+          required
           value={username}
           onChange={({ target }) => setUsername(target.value)}
         />
@@ -44,6 +47,7 @@ const LoginForm = () => {
           name="Password"
           data-testid="password"
           autoComplete="current-password"
+          required
           value={password}
           onChange={({ target }) => setPassword(target.value)}
         />

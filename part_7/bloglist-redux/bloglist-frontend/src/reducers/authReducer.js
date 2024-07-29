@@ -18,14 +18,6 @@ const userSlice = createSlice({
   },
 });
 
-// export const readUser = (json) => {
-//   return (dispatch) => {
-//     const user = JSON.parse(json);
-//     blogService.setToken(user.token);
-//     dispatch(setUser(user));
-//   };
-// };
-
 export const initializeUser = () => {
   return async (dispatch) => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser');
@@ -38,21 +30,27 @@ export const initializeUser = () => {
 };
 
 export const loginUser = (username, password) => {
-  return async (dispatch) => {
-    try {
-      const user = await loginService.login({
-        username,
-        password,
-      });
-
-      window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user));
-
-      blogService.setToken(user.token);
-
-      dispatch(setUser(user));
-    } catch (err) {
-      console.log(err);
-    }
+  return (dispatch) => {
+    return new Promise((resolve, reject) => {
+      loginService
+        .login({
+          username,
+          password,
+        })
+        .then((user) => {
+          window.localStorage.setItem(
+            'loggedBlogappUser',
+            JSON.stringify(user)
+          );
+          blogService.setToken(user.token);
+          dispatch(setUser(user));
+          resolve(user);
+        })
+        .catch((err) => {
+          console.log(err);
+          reject(err);
+        });
+    });
   };
 };
 

@@ -33,7 +33,7 @@ describe('Note app', () => {
     test('fails with wrong credentials', async ({ page }) => {
       await loginWith(page, 'fernadev', 'wrong')
 
-      const errorDiv = await page.locator('.error')
+      const errorDiv = await page.getByTestId('error')
 
       await expect(errorDiv).toContainText('invalid username or password')
       await expect(errorDiv).toHaveCSS('border-style', 'solid')
@@ -55,11 +55,15 @@ describe('Note app', () => {
       await expect(
         page.getByText('a new blog blog-0 by Ferna added')
       ).toBeVisible()
+
       await expect(
         page.getByRole('button', { name: 'create new blog' })
       ).toBeVisible()
-      await expect(page.getByRole('button', { name: 'view' })).toBeVisible()
-      await expect(page.getByText('blog-0 Ferna')).toBeVisible()
+
+      const blogLink = await page
+        .locator('a', { hasText: 'blog-0 by Ferna' })
+        .last()
+      await expect(blogLink).toBeVisible()
     })
 
     describe('And several blogs exists', () => {

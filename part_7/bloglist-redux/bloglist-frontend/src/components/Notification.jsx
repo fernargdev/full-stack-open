@@ -9,14 +9,14 @@ const Notification = () => {
   const data = useSelector((state) => state.notifications.data);
 
   if (!data) {
-    return <NotificationStyled></NotificationStyled>;
+    return <NotificationStyled data-testid="notification"></NotificationStyled>;
   }
 
   if (data.includes('Error:')) {
-    return <Error>{data}</Error>;
+    return <Error data-testid="error">{data}</Error>;
   }
 
-  return <Note>{data}</Note>;
+  return <Note data-testid="note">{data}</Note>;
 };
 
 export default Notification;

@@ -9,7 +9,7 @@ import {
   FormButton,
 } from '../styles/Components.styled';
 
-const BlogForm = () => {
+const BlogForm = ({ blogFormRef }) => {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [url, setUrl] = useState('');
@@ -35,13 +35,13 @@ const BlogForm = () => {
       setTitle('');
       setAuthor('');
       setUrl('');
+      blogFormRef.current.toggleVisibility();
     } catch (err) {
       dispatch(createNotification(`Error: ${err.response.data.error}`));
     }
   };
 
   return (
-    // <div className="blogForm-container">
     <BlogFormStyled onSubmit={handleSubmit}>
       <h2>Create new blog</h2>
       <label>

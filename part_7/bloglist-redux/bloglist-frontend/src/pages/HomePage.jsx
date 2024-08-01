@@ -12,7 +12,7 @@ const HomePage = () => {
   return (
     <HomePageStyled>
       <Togglable buttonLabel="create new blog" ref={blogFormRef}>
-        <BlogForm />
+        <BlogForm blogFormRef={blogFormRef} />
       </Togglable>
 
       <BlogList />

@@ -4,10 +4,10 @@
   "description": "bloglist app backend",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "NODE_ENV=production node index.js",
     "dev": "nodemon index.js",
     "lint": "eslint .",
-    "test": "jest --verbose",
+    "test": "NODE_ENV=test jest --verbose --runInBand",
     "test:start": "NODE_ENV=test node index.js",
     "format": "prettier --write ."
   },

@@ -31,10 +31,14 @@ app.use(express.static('dist'));
 app.use(express.json());
 app.use(middleware.requestLogger);
 
-if (process.env.NODE_ENV === 'test') {
-  const testingRouter = require('./controllers/testing');
-  app.use('/api/testing', testingRouter);
-}
+// TODO: TESTING
+// if (process.env.NODE_ENV === 'test') {
+//   const testingRouter = require('./controllers/testing');
+//   app.use('/api/testing', testingRouter);
+// }
+
+const testingRouter = require('./controllers/testing');
+app.use('/api/testing', testingRouter);
 
 app.use('/api/blogs', blogsRouter);
 app.use('/api/blogs', commentsRouter);

@@ -23,7 +23,11 @@ const CommentForm = ({ id }) => {
     <section>
       <h3>Comments: </h3>
       <form onSubmit={addComment}>
-        <CommentInput type="text" name="newCommetInput" />
+        <CommentInput
+          type="text"
+          name="newCommetInput"
+          data-testid="comment-input"
+        />
         <button type="submit">Add comment</button>
       </form>
     </section>

@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import blogService from '../services/blogs';
+import { updateUserDetails } from './usersReducer';
 
 const blogSlice = createSlice({
   name: 'blog',
@@ -32,6 +33,7 @@ export const createBlog = (newBlog) => {
   return async (dispatch) => {
     const createdBlog = await blogService.create(newBlog);
     dispatch(addBlog(createdBlog));
+    dispatch(updateUserDetails(createdBlog.user));
   };
 };
 

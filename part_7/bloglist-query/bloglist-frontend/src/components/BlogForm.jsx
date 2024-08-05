@@ -4,7 +4,7 @@ import { useQueryClient, useMutation } from '@tanstack/react-query';
 import { useNotificationDispatch } from '../NotificationContext';
 import blogService from '../services/blogs';
 
-const BlogForm = () => {
+const BlogForm = ({ blogFormRef }) => {
   const createBlog = blogService.create;
 
   const [title, setTitle] = useState('');
@@ -45,6 +45,8 @@ const BlogForm = () => {
     setUrl('');
 
     newBlogMutation.mutate(newBlog);
+
+    blogFormRef.current.toggleVisibility();
   };
 
   return (

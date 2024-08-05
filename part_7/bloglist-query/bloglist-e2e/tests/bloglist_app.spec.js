@@ -62,6 +62,52 @@ describe('Note app', () => {
       await expect(page.getByText('blog-0 Ferna')).toBeVisible()
     })
 
+    test('cannot create a blog without title', async ({ page }) => {
+      await page.getByRole('button', { name: 'create new blog' }).click()
+
+      await page.getByTestId('author').fill('Ferna')
+      await page.getByTestId('url').fill('http://localhost:5173')
+
+      await page.getByRole('button', { name: 'create' }).click()
+
+      await expect(page.getByText('Error: title or url missing')).toBeVisible()
+    })
+
+    test('cannot create a blog without URL', async ({ page }) => {
+      await page.getByRole('button', { name: 'create new blog' }).click()
+
+      await page.getByTestId('title').fill('blog-0')
+      await page.getByTestId('author').fill('Ferna')
+
+      await page.getByRole('button', { name: 'create' }).click()
+
+      await expect(page.getByText('Error: title or url missing')).toBeVisible()
+    })
+
+    test('the blog creation form can be cancelled', async ({ page }) => {
+      await page.getByRole('button', { name: 'create new blog' }).click()
+
+      await page.getByRole('button', { name: 'cancel' }).click()
+
+      await expect(
+        page.getByRole('button', { name: 'create new blog' })
+      ).toBeVisible()
+    })
+
+    test('notification message disappears after timeout', async ({ page }) => {
+      await createBlog(page, 'blog-0', 'Ferna', 'http://localhost:5173')
+
+      await expect(
+        page.getByText('a new blog blog-0 by Ferna added')
+      ).toBeVisible()
+
+      await page.waitForTimeout(3000)
+
+      await expect(
+        page.getByText('a new blog blog-0 by Ferna added')
+      ).not.toBeVisible()
+    })
+
     describe('And several blogs exists', () => {
       beforeEach(async ({ page }) => {
         await createBlog(page, 'blog-1', 'Ferna', 'http://localhost:5173')
@@ -92,6 +138,15 @@ describe('Note app', () => {
 
         await expect(blog.getByText('blog-2')).not.toBeVisible()
         await expect(blog).not.toBeVisible()
+      })
+
+      test('can view blog details', async ({ page }) => {
+        const blog = page.locator('.blog').filter({ hasText: 'blog-1' })
+        await blog.getByRole('button', { name: 'view' }).click()
+
+        await expect(blog.getByText('http://localhost:5173')).toBeVisible()
+        await expect(blog.getByText('likes 0')).toBeVisible()
+        await expect(blog.getByText('Ferna', { exact: true })).toBeVisible()
       })
 
       test('only the user who added the blog sees the remove button', async ({

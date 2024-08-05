@@ -1,23 +1,27 @@
+// dependencies
 import { useContext, useEffect, useRef } from 'react';
-
 import { useQuery } from '@tanstack/react-query';
+
+// contexts
+import UserContext from './UserContext';
 import { useNotificationDispatch } from './NotificationContext';
+
+// services
 import blogService from './services/blogs';
 
+// components
 import Notification from './components/Notification';
 import Togglable from './components/Togglable';
 import Blog from './components/Blog';
 import BlogForm from './components/BlogForm';
 import LoginForm from './components/LoginForm';
-import UserContext from './UserContext';
 
 const App = () => {
-  const blogFormRef = useRef();
-
-  const notificationDispatch = useNotificationDispatch();
-  const readBlog = blogService.getAll;
-
   const [user, userDispatch] = useContext(UserContext);
+  const notificationDispatch = useNotificationDispatch();
+
+  const blogFormRef = useRef();
+  const readBlog = blogService.getAll;
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser');
@@ -78,7 +82,7 @@ const App = () => {
           </p>
 
           <Togglable buttonLabel="create new blog" ref={blogFormRef}>
-            <BlogForm />
+            <BlogForm blogFormRef={blogFormRef} />
           </Togglable>
 
           {[...blogs]

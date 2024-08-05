@@ -1,0 +1,80 @@
+@api=http://localhost:3003/api
+
+
+### GET api/blogs ✅
+GET {{api}}/blogs
+
+### POST api/blogs ✅
+POST {{api}}/blogs
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpIiwiaWQiOiI2NWUzYzRiZTJjZWI2MTAyMzNhNGZlZTgiLCJpYXQiOjE3MDk0MjU4NzJ9.H9TEg2WoHQTgZn4CMy2-7R6CxMEP-UpA_TO-YHpFufw
+
+{
+ "url": "https://Luukkainen.com",
+ "title": "Microservices and the First Law of Distributed Objects",
+ "author": "Martin Fowler"
+}
+
+### DELETE api/blogs/id
+DELETE {{api}}/blogs/6678a8ab98676268db795767
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImZlcm5hZGV2IiwiaWQiOiI2NjAxYWIzZjU5YmE1NDk3NDUyMWQxMGMiLCJpYXQiOjE3MjA0NDU0OTB9.nuYcX2mXSLupM3bQ2z6LYYptrMxDm0xbjRL1Aw__xAE
+
+
+### PUT api/blogs/id
+PUT {{api}}/blogs/65e3c5222ceb610233a4feec
+Content-Type: application/json
+
+{
+  "likes": 16
+}
+
+
+### GET api/users ✅
+GET  {{api}}/users
+
+### POST api/users ✅
+POST {{api}}/users
+Content-Type: application/json
+
+{
+  "username": "Venla",
+  "name": "Venla Ruuska",
+  "password": "Ruuska"
+}
+
+### DELETE api/users
+DELETE {{api}}/users/65e3bd272ceb610233a4fe9d
+
+
+### POST api/login ✅
+POST {{api}}/login
+Content-Type: application/json
+
+{
+  "username": "fernadev",
+  "password": "Fernando1234"
+}
+
+### POST api/testing/reset
+POST {{api}}/testing/reset
+
+
+# Comments #
+
+### POST api/blogs/id/comments
+POST {{api}}/blogs/66798389bec4800aa9ad2d04/comments 
+Content-Type: application/json 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImZlcm5hZGV2IiwiaWQiOiI2NjAxYWIzZjU5YmE1NDk3NDUyMWQxMGMiLCJpYXQiOjE3MjA0NDU0OTB9.nuYcX2mXSLupM3bQ2z6LYYptrMxDm0xbjRL1Aw__xAE
+
+{ 
+  "content": "Comentario-2"  
+}
+
+### GET api/blogs/id/comments
+GET {{api}}/blogs/66798389bec4800aa9ad2d04/comments
+
+
+## ADMIN
+### DELETE api/blogs/id/comments
+DELETE {{api}}/blogs/668bf0fc83660cbf0c142f74/comments
+ 

@@ -28,10 +28,10 @@ app.use(express.static('dist'));
 app.use(express.json());
 app.use(middleware.requestLogger);
 
-// if (process.env.NODE_ENV === 'test') {
-const testingRouter = require('./controllers/testing');
-app.use('/api/testing', testingRouter);
-// }
+if (process.env.NODE_ENV === 'test') {
+  const testingRouter = require('./controllers/testing');
+  app.use('/api/testing', testingRouter);
+}
 
 app.use('/api/blogs', blogsRouter);
 app.use('/api/users', usersRouter);

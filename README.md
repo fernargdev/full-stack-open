@@ -73,3 +73,14 @@ This repository contains the answers to the [Full Stack Open version 2024](https
 - React Query, useReducer and the context
 
 [See the answers](https://github.com/fernargdev/full-stack-open/tree/main/part_6)
+
+### [Part 7 - React router, custom hooks, styling app with CSS and webpack](https://fullstackopen.com/en/part7)
+
+- React Router
+- Custom hooks
+- More about styles
+- Webpack
+- Class components, Miscellaneous
+- Exercises: extending the bloglist
+
+[See the answers](https://github.com/fernargdev/full-stack-open/tree/main/part_7)

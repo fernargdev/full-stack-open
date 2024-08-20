@@ -1,31 +1,34 @@
-import express from 'express'
-const app = express()
+import express from 'express';
+const app = express();
 
-import { calculateBmi } from './bmiCalculator'
+import { calculateBmi } from './bmiCalculator';
 
 app.get('/hello', (_req, res) => {
-  res.send('Hello Full Stack!')
-})
+  res.send('Hello Full Stack!');
+});
 
 app.get('/bmi', (req, res) => {
-  const height = Number(req.query.height)
-  const weight = Number(req.query.weight)
+  const height = Number(req.query.height);
+  const weight = Number(req.query.weight);
+
+  // const val = 1
+  // console.log(val)
 
   if (!height || !weight) {
-    res.status(400).json({ error: 'malformatted parameters' })
+    res.status(400).json({ error: 'malformatted parameters' });
   }
 
   if (isNaN(height) || isNaN(weight)) {
-    res.status(400).json({ error: 'malformatted parameters' })
+    res.status(400).json({ error: 'malformatted parameters' });
   }
 
-  const bmi = calculateBmi(height, weight)
+  const bmi = calculateBmi(height, weight);
 
-  res.status(200).json({ weight, height, bmi })
-})
+  res.status(200).json({ weight, height, bmi });
+});
 
-const PORT = 3000
+const PORT = 3000;
 
 app.listen(PORT, () => {
-  console.log(`Server running on port http://localhost:${PORT}`)
-})
+  console.log(`Server running on port http://localhost:${PORT}`);
+});

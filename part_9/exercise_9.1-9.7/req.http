@@ -1,0 +1,7 @@
+@api=http://localhost:3000
+
+### /hello
+GET {{api}}/hello
+
+### /bmi
+GET {{api}}/bmi?height=180&weight=72

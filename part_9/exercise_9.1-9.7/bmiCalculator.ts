@@ -35,17 +35,19 @@ export const calculateBmi = (cm: number, kg: number): string => {
   }
 }
 
-try {
-  const { cm, kg } = parseArguments(process.argv)
-  console.log(calculateBmi(cm, kg))
-} catch (error: unknown) {
-  let errorMessage = 'Something went wrong: '
+if (require.main === module) {
+  try {
+    const { cm, kg } = parseArguments(process.argv)
+    console.log(calculateBmi(cm, kg))
+  } catch (error: unknown) {
+    let errorMessage = 'Something went wrong: '
 
-  if (error instanceof Error) {
-    errorMessage += 'Error' + error.message
+    if (error instanceof Error) {
+      errorMessage += 'Error' + error.message
+    }
+
+    console.log(errorMessage)
   }
-
-  console.log(errorMessage)
 }
 
 // console.log(calculateBmi(180, 74))

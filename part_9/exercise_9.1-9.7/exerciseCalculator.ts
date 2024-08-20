@@ -75,17 +75,19 @@ export const calculateExercises = (
   return result;
 };
 
-try {
-  const { daily_exercises, target } = parseArguments(process.argv);
-  console.log(calculateExercises(daily_exercises, target));
-} catch (error: unknown) {
-  let errorMessage = 'Something went wrong: ';
+if (require.main === module) {
+  try {
+    const { daily_exercises, target } = parseArguments(process.argv);
+    console.log(calculateExercises(daily_exercises, target));
+  } catch (error: unknown) {
+    let errorMessage = 'Something went wrong: ';
 
-  if (error instanceof Error) {
-    errorMessage += 'Error' + error.message;
+    if (error instanceof Error) {
+      errorMessage += 'Error' + error.message;
+    }
+
+    console.log(errorMessage);
   }
-
-  console.log(errorMessage);
 }
 
 // console.log(calculateExercises([3, 0, 2, 4.5, 0, 3, 1], 2))

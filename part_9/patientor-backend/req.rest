@@ -1,0 +1,4 @@
+@api=http://localhost:3003
+
+### /ping
+GET {{api}}/ping

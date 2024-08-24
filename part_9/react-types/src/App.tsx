@@ -1,35 +1,102 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+interface HeaderProps {
+  name: string
+}
 
-function App() {
-  const [count, setCount] = useState(0)
+const Header = (props: HeaderProps) => {
+  return (
+    <header>
+      <h1>{props.name}</h1>
+    </header>
+  )
+}
+
+interface ContentProps {
+  parts: {
+    name: string
+    exerciseCount: number
+  }[]
+}
+
+const Content = (props: ContentProps) => {
+  return (
+    <main>
+      {props.parts.map((part) => (
+        <p key={part.name}>
+          {part.name} {part.exerciseCount}
+        </p>
+      ))}
+    </main>
+  )
+}
+
+interface TotalProps {
+  total: number
+}
+
+const Total = (props: TotalProps) => {
+  return (
+    <section>
+      <p>Number of exercises {props.total}</p>
+    </section>
+  )
+}
+
+const App = () => {
+  const courseName = 'Half Stack application development'
+
+  const courseParts = [
+    {
+      name: 'Fundamentals',
+      exerciseCount: 10,
+    },
+    {
+      name: 'Using props to pass data',
+      exerciseCount: 7,
+    },
+    {
+      name: 'Deeper type usage',
+      exerciseCount: 14,
+    },
+  ]
+
+  const totalExercises = courseParts.reduce(
+    (sum, part) => sum + part.exerciseCount,
+    0
+  )
+
+  // const-declarations
+
+  // return (
+  //   <div>
+  //     <Header name={courseName} />
+  //     <Content ... />
+  //     <Total ... />
+  //   </div>
+  // )
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div>
+      <Header name={courseName} />
+      <Content parts={courseParts} />
+      <Total total={totalExercises} />
+    </div>
   )
+
+  // return (
+  //   <div>
+  //     <h1>{courseName}</h1>
+  //     <p>
+  //       {courseParts[0].name} {courseParts[0].exerciseCount}
+  //     </p>
+  //     <p>
+  //       {courseParts[1].name} {courseParts[1].exerciseCount}
+  //     </p>
+  //     <p>
+  //       {courseParts[2].name} {courseParts[2].exerciseCount}
+  //     </p>
+  //     <p>Number of exercises {totalExercises}</p>
+  //   </div>
+  // )
 }
 
 export default App

@@ -3,6 +3,10 @@
 ### GET /
 GET {{api}}
 
+### GET /all
+GET {{api}}/all
+
+
 ### POST /
 POST {{api}}
 Content-Type: application/json

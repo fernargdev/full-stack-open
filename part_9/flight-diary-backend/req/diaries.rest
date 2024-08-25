@@ -1,0 +1,16 @@
+@api=http://localhost:3005/api/diaries
+
+### GET /
+GET {{api}}
+
+### POST /
+POST {{api}}
+Content-Type: application/json
+Accept: application/json
+
+{
+    "date": "2023-01-01",
+    "weather": "sunny",
+    "visibility": "great",
+    "comment": "good comment"
+}

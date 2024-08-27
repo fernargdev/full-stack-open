@@ -38,17 +38,9 @@ const App = () => {
       setError(null)
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        console.log('Axios Error')
-
-        setError(error.response?.data)
-
-        console.log(error.status)
-        console.log(error.response?.data)
+        setError(error.response?.data || 'An error occurred')
       } else {
         setError('Unknown Error')
-
-        console.log('Unknownun Error')
-        console.log(error)
       }
     }
   }
@@ -56,10 +48,11 @@ const App = () => {
   return (
     <>
       <header>
-        <h1>Diary App</h1>
+        <h1>Flight Diary</h1>
       </header>
 
       <main>
+        <br />
         <section>
           <h2>Add New Entry</h2>
 
@@ -68,8 +61,10 @@ const App = () => {
           <form onSubmit={addDiaryEntry}>
             <div>
               <label htmlFor="date">Date: </label>
+              <br />
+
               <input
-                type="text"
+                type="date"
                 id="date"
                 required
                 value={newDiaryEntry.date}
@@ -83,39 +78,64 @@ const App = () => {
             </div>
 
             <div>
+              <br />
               <label htmlFor="visibility">Visibility: </label>
-              <input
-                type="text"
-                id="visibility"
-                required
-                value={newDiaryEntry.visibility}
-                onChange={(event) =>
-                  setNewDiaryEntry({
-                    ...newDiaryEntry,
-                    visibility: event.target.value as Visibility,
-                  })
-                }
-              />
+              <br />
+
+              {Object.values(Visibility).map((v) => {
+                return (
+                  <label key={v}>
+                    <input
+                      type="radio"
+                      id={v}
+                      name={v}
+                      value={v}
+                      checked={newDiaryEntry.visibility === v}
+                      onChange={(event) =>
+                        setNewDiaryEntry({
+                          ...newDiaryEntry,
+                          visibility: event.target.value as Visibility,
+                        })
+                      }
+                    />
+                    {v}
+                  </label>
+                )
+              })}
             </div>
 
             <div>
+              <br />
               <label htmlFor="weather">Weather: </label>
-              <input
-                type="text"
-                id="weather"
-                required
-                value={newDiaryEntry.weather}
-                onChange={(event) =>
-                  setNewDiaryEntry({
-                    ...newDiaryEntry,
-                    weather: event.target.value as Weather,
-                  })
-                }
-              />
+              <br />
+
+              {Object.values(Weather).map((w) => {
+                return (
+                  <label key={w}>
+                    <input
+                      type="radio"
+                      id={w}
+                      name={w}
+                      value={w}
+                      checked={newDiaryEntry.weather === w}
+                      onChange={(event) =>
+                        setNewDiaryEntry({
+                          ...newDiaryEntry,
+                          weather: event.target.value as Weather,
+                        })
+                      }
+                    />
+                    {w}
+                  </label>
+                )
+              })}
             </div>
 
             <div>
+              <br />
               <label htmlFor="comment">Comment: </label>
+              <br />
+
               <input
                 type="text"
                 id="comment"
@@ -135,18 +155,19 @@ const App = () => {
           </form>
         </section>
 
+        <br />
         <section>
           <h2>Diary Entries</h2>
-          <ul>
-            {entries.map((entry) => (
-              <li key={entry.id}>
-                <b>{entry.date}</b> <br />
-                <span>{`visibility: ${entry.visibility}`}</span> <br />
-                <span>{`weather: ${entry.weather}`}</span> <br />
-                <p>{entry.comment}</p>
-              </li>
-            ))}
-          </ul>
+
+          {entries.map((e) => (
+            <div key={e.id}>
+              <h3>{e.date}</h3>
+              <span>visibility: {e.visibility}</span>
+              <br />
+              <span>weather: {e.weather}</span>
+              <p>{e.comment}</p>
+            </div>
+          ))}
         </section>
       </main>
     </>

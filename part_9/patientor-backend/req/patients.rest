@@ -3,6 +3,9 @@
 ### GET /
 GET {{api}}
 
+### GET /:id
+GET {{api}}/d2773336-f723-11e9-8f0b-362b9e155667
+
 ### POST /
 POST {{api}}
 Content-Type: application/json
@@ -12,6 +15,6 @@ Accept: application/json
     "name": "Matti Luukkainen",
     "dateOfBirth": "1971-04-09",
     "ssn": "090471-8890",
-    "gender": "malee",
+    "gender": "male",
     "occupation": "Digital3"
 }

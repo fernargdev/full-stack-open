@@ -9,3 +9,8 @@ This part is created by Tuomo Torppa, Tuukka Peuraniemi and Jani Rapo, the aweso
 Part updated 12th August 2024
 
 - ESLint configurations updated
+
+Part updated 28th August 2024
+
+- Zod library for validating request body type
+- A new exercise has been added at the on of Part 9 "Typing an Express app" at 28th August 2024. Because of that numbering the of Exercises 9.14- has changed.

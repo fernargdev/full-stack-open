@@ -16,5 +16,6 @@ Accept: application/json
     "dateOfBirth": "1971-04-09",
     "ssn": "090471-8890",
     "gender": "male",
+    "entries": [],
     "occupation": "Digital3"
 }

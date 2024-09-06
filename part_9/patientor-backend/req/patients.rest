@@ -1,13 +1,12 @@
 @api=http://localhost:3001/api/patients
 
+
+
 ### GET /
 GET {{api}}
 
 ### GET /:id
 GET {{api}}/d2773822-f723-11e9-8f0b-362b9e155667
-
-### GET /:id
-GET {{api}}/TESTe46d-70b3-4d90-b090-4535c7cf8fb1
 
 ### POST /
 POST {{api}}
@@ -22,6 +21,11 @@ Accept: application/json
     "entries": [],
     "occupation": "Digital3"
 }
+
+
+
+### GET /:id
+GET {{api}}/TESTe46d-70b3-4d90-b090-4535c7cf8fb1
 
 ### POST /
 POST {{api}}

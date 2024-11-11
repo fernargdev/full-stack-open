@@ -1,36 +1,37 @@
 import { z } from 'zod';
-import { Gender, HealthCheckRating } from './types';
+import { Gender, HealthCheckRating } from '../types';
 
+// Patient
 export const NewPatientSchema = z.object({
-  name: z.string(),
-  ssn: z.string(),
-  occupation: z.string(),
+  name: z.string().min(3),
   dateOfBirth: z.string().date(),
+  ssn: z.string().min(5),
+  occupation: z.string().min(3),
   gender: z.nativeEnum(Gender),
-  entries: z.array(z.any()),
 });
 
-const BaseEntrySchema = z.object({
-  description: z.string(),
+// Entry
+export const BaseEntrySchema = z.object({
+  description: z.string().min(2),
   date: z.string().date(),
-  specialist: z.string(),
+  specialist: z.string().min(3),
   diagnosisCodes: z.array(z.string()).optional(),
 });
 
-const HealthCheckEntrySchema = BaseEntrySchema.extend({
+export const HealthCheckEntrySchema = BaseEntrySchema.extend({
   type: z.literal('HealthCheck'),
   healthCheckRating: z.nativeEnum(HealthCheckRating),
 });
 
-const HospitalEntrySchema = BaseEntrySchema.extend({
+export const HospitalEntrySchema = BaseEntrySchema.extend({
   type: z.literal('Hospital'),
   discharge: z.object({
     date: z.string().date(),
-    criteria: z.string(),
+    criteria: z.string().min(3),
   }),
 });
 
-const OccupationalHealthcareEntrySchema = BaseEntrySchema.extend({
+export const OccupationalHealthcareEntrySchema = BaseEntrySchema.extend({
   type: z.literal('OccupationalHealthcare'),
   employerName: z.string(),
   sickLeave: z

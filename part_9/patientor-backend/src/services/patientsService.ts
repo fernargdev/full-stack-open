@@ -2,21 +2,26 @@ import patients from '../../data/patients';
 import {
   Patient,
   NoSsnPatient,
-  NewPatientEntry,
   EntryWithoutId,
   Entry,
+  PatientFormValues,
 } from '../types';
 import { v1 as uuid } from 'uuid';
 
-const getAllNoSsnPatient = (): NoSsnPatient[] => {
+// Patient
+const getAllPatient = (): Patient[] => {
+  return patients;
+};
+
+const getNoSsnPatients = (): NoSsnPatient[] => {
   return patients.map(
     ({ id, name, dateOfBirth, gender, occupation, entries }) => ({
+      id,
       name,
       occupation,
       dateOfBirth,
       gender,
       entries,
-      id,
     }),
   );
 };
@@ -26,26 +31,20 @@ const getPatientById = (id: string): Patient | undefined => {
   return patient;
 };
 
-const addNewPatient = (entry: NewPatientEntry): Patient => {
-  const newPatientEntry = {
+const addPatient = (entry: PatientFormValues): Patient => {
+  const newPatient: Patient = {
     id: uuid(),
     ...entry,
+    entries: [],
   };
 
-  patients.push(newPatientEntry);
+  patients.push(newPatient);
 
-  return newPatientEntry;
+  return newPatient;
 };
 
-const addEntryToPatient = (
-  id: string,
-  entry: EntryWithoutId,
-): Entry | undefined => {
-  const patient = getPatientById(id);
-  if (!patient) {
-    return undefined;
-  }
-
+// Entry
+const addEntry = (patient: Patient, entry: EntryWithoutId): Entry => {
   const newEntry = {
     id: uuid(),
     ...entry,
@@ -56,8 +55,9 @@ const addEntryToPatient = (
 };
 
 export default {
-  getAllNoSsnPatient,
-  addNewPatient,
+  getAllPatient,
+  getNoSsnPatients,
+  addPatient,
   getPatientById,
-  addEntryToPatient,
+  addEntry,
 };

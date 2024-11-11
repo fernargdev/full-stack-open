@@ -1,13 +1,13 @@
 @api=http://localhost:3001/api/patients
 
 
-### GET /
+### GET / ✅
 GET {{api}}
 
-### GET /:id
-GET {{api}}/d2773822-f723-11e9-8f0b-362b9e155667
+### GET /:id ✅
+GET {{api}}/d2773336-f723-11e9-8f0b-362b9e155667
 
-### POST /
+### POST / ✅
 POST {{api}}
 Content-Type: application/json
 Accept: application/json
@@ -17,25 +17,20 @@ Accept: application/json
     "dateOfBirth": "1971-04-09",
     "ssn": "090471-8890",
     "gender": "male",
-    "entries": [],
-    "occupation": "Digital3"
+    "occupation": "Nomadic"
 }
 
-### POST /:id/entries
-POST {{api}}/d2773822-f723-11e9-8f0b-362b9e155667/entries
+### POST /:id/entries ✅
+POST {{api}}/d2773336-f723-11e9-8f0b-362b9e155667/entries
 Content-Type: application/json
 Accept: application/json
 
 {
-    "date": "2019-08-05",
-    "type": "OccupationalHealthcare",
-    "specialist": "MD House",
-    "employerName": "HyPD",
-    "diagnosisCodes": ["Z57.1", "Z74.3", "M51.2"],
-    "description": "Patient mistakenly found himself in a nuclear plant waste site without protection gear. Very minor radiation poisoning.",
-    "sickLeave": {
-        "startDate": "2019-08-05",
-        "endDate": "2019-08-28"
-    }
+    "type": "HealthCheck",
+    "description": "good",
+    "date": "2023-01-04",
+    "specialist": "Dr Alban",
+    "healthCheckRating": 1,
+    "diagnosisCodes": ["Z57.1"]
 }
 

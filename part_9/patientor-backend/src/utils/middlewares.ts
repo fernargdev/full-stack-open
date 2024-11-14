@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { z } from 'zod';
+import { ZodError } from 'zod';
 
 import {
   NewPatientSchema,
@@ -9,21 +9,20 @@ import {
   OccupationalHealthcareEntrySchema,
   EntrySchema,
 } from './schemas';
+
 import { Entry } from '../types';
 
-// middlewares
 export const newPatientParser = (
   req: Request,
   _res: Response,
   next: NextFunction,
-) => {
+): void => {
   try {
     NewPatientSchema.parse(req.body);
-
     console.log(req.body);
 
     next();
-  } catch (error: unknown) {
+  } catch (error) {
     next(error);
   }
 };
@@ -32,7 +31,7 @@ export const newEntryParser = (
   req: Request<unknown, unknown, Entry>,
   _res: Response,
   next: NextFunction,
-) => {
+): void => {
   try {
     BaseEntrySchema.parse(req.body);
     console.log(req.body);
@@ -54,27 +53,30 @@ export const newEntryParser = (
         EntrySchema.parse(req.body);
         break;
     }
+
     next();
-  } catch (error: unknown) {
+  } catch (error) {
     next(error);
   }
 };
 
-export const errorMiddleware = (
+const errorMiddleware = (
   error: unknown,
   _req: Request,
   res: Response,
   next: NextFunction,
-) => {
-  if (error instanceof z.ZodError) {
-    const errorMessage = `${error.issues[0].path[0]}: ${error.issues[0].message}`;
-    console.log(errorMessage);
+): void => {
+  if (error instanceof ZodError) {
+    const errorMessage: string = `${error.issues[0].path[0]}: ${error.issues[0].message}`;
+
     console.log('Error: ', error.issues);
 
-    // res.status(404).json({ error: error.issues });
     res.status(400).send(errorMessage);
   } else {
     console.error('Unknown error: ', error);
+
     next(error);
   }
 };
+
+export { errorMiddleware };

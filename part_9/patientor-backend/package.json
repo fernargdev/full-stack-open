@@ -9,8 +9,8 @@
     "lint": "eslint .",
     "start": "node build/index.js"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Fernando Angel Rodriguez",
+  "license": "MIT",
   "devDependencies": {
     "@eslint/js": "^9.9.0",
     "@stylistic/eslint-plugin": "^2.6.4",

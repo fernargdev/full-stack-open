@@ -1,11 +1,34 @@
 @api=http://localhost:3001/api/patients
 
 
+### get all patients ✅ 
 ### GET / ✅
 GET {{api}}
 
+
+### get all patients no ssn ✅
+### GET /no-ssn ✅
+GET {{api}}/no-ssn
+
+
+### get one patient by id✅
 ### GET /:id ✅
-GET {{api}}/d2773336-f723-11e9-8f0b-362b9e155667
+GET {{api}}/d27736ec-f723-11e9-8f0b-362b9e155667
+
+
+### add one patient ✅
+### POST / ✅
+POST {{api}}
+Content-Type: application/json
+Accept: application/json
+
+{
+    "name": "Luke1",
+    "dateOfBirth": "1971-04-09",
+    "ssn": "090471-8890",
+    "gender": "male",
+    "occupation": "Technician"
+}
 
 ### POST / ✅
 POST {{api}}
@@ -13,15 +36,77 @@ Content-Type: application/json
 Accept: application/json
 
 {
-    "name": "Matti Luukkainen",
+    "name": "Luke2",
+    "dateOfBirth": "1971-04-09",
+    "gender": "male",
+    "occupation": "Technician"
+}
+
+### POST / ✅
+POST {{api}}
+Content-Type: application/json
+Accept: application/json
+
+{
+    "name": "Luke3",
     "dateOfBirth": "1971-04-09",
     "ssn": "090471-8890",
     "gender": "male",
-    "occupation": "Nomadic"
+    "occupation": "Technician",
+    "entries": [
+      {
+        "date": "2019-05-01",
+        "specialist": "Dr Byte House",
+        "type": "HealthCheck",
+        "description": "Digital overdose, very bytestatic. Otherwise healthy.",
+        "healthCheckRating": 0
+      }
+    ]
 }
 
+### POST / ✅
+POST {{api}}
+Content-Type: application/json
+Accept: application/json
+
+{
+    "name": "Luke4",
+    "dateOfBirth": "1971-04-09",
+    "ssn": "090471-8890",
+    "gender": "male",
+    "occupation": "Technician",
+    "country": "Finland"
+}
+
+### POST / ✅
+POST {{api}}
+Content-Type: application/json
+Accept: application/json
+
+{
+    "name": "Luke5",
+    "dateOfBirth": "1971-04-09",
+    "gender": "male"
+}
+
+
+### add one entry ✅
+### BaseEntry ✅
 ### POST /:id/entries ✅
-POST {{api}}/d2773336-f723-11e9-8f0b-362b9e155667/entries
+POST {{api}}/d27736ec-f723-11e9-8f0b-362b9e155667/entries
+Content-Type: application/json
+Accept: application/json
+
+{
+    "description": "good",
+    "date": "2023-01-04",
+    "specialist": "Dr. Lee",
+    "diagnosisCodes": ["Z57.1"]
+}
+
+### HealthCheck ✅
+### POST /:id/entries ✅
+POST {{api}}/d27736ec-f723-11e9-8f0b-362b9e155667/entries
 Content-Type: application/json
 Accept: application/json
 
@@ -29,8 +114,135 @@ Accept: application/json
     "type": "HealthCheck",
     "description": "good",
     "date": "2023-01-04",
-    "specialist": "Dr Alban",
-    "healthCheckRating": 1,
-    "diagnosisCodes": ["Z57.1"]
+    "specialist": "Dr. Lee",
+    "diagnosisCodes": ["Z57.1", "Z74.3", "M51.2"],
+    "healthCheckRating": 1
+}
+
+### POST /:id/entries ✅
+POST {{api}}/d27736ec-f723-11e9-8f0b-362b9e155667/entries
+Content-Type: application/json
+Accept: application/json
+
+{
+    "type": "HealthCheck",
+    "description": "good",
+    "date": "2023-01-04",
+    "specialist": "Dr. Lee",
+    "diagnosisCodes": ["Z57.1", "Z74.3", "M51.2"]
+}
+
+### POST /:id/entries ✅
+POST {{api}}/d27736ec-f723-11e9-8f0b-362b9e155667/entries
+Content-Type: application/json
+Accept: application/json
+
+{
+    "type": "HealthCheck",
+    "description": "good",
+    "date": "2023-01-04",
+    "specialist": "Dr. Lee",
+    "diagnosisCodes": ["Z57.1", "Z74.3", "M51.2"],
+    "healthCheckRating": 1, 
+    "country": "Finland"
+}
+
+### OccupationalHealthcare ✅
+### POST /:id/entries ✅
+POST {{api}}/d27736ec-f723-11e9-8f0b-362b9e155667/entries
+Content-Type: application/json
+Accept: application/json
+
+{
+    "type": "OccupationalHealthcare",
+    "description": "good",
+    "date": "2023-01-04",
+    "specialist": "Dr. Lee",
+    "diagnosisCodes": ["Z57.1", "Z74.3", "M51.2"],
+    "employerName": "FBI",
+    "sickLeave": {
+        "startDate": "2019-08-05",
+        "endDate": "2019-08-28"
+    }
+}
+
+### POST /:id/entries ✅
+POST {{api}}/d27736ec-f723-11e9-8f0b-362b9e155667/entries
+Content-Type: application/json
+Accept: application/json
+
+{
+    "type": "OccupationalHealthcare",
+    "description": "good",
+    "date": "2023-01-04",
+    "specialist": "Dr. Lee"
+}
+
+### POST /:id/entries ✅
+POST {{api}}/d27736ec-f723-11e9-8f0b-362b9e155667/entries
+Content-Type: application/json
+Accept: application/json
+
+{
+    "type": "OccupationalHealthcare",
+    "description": "good",
+    "date": "2023-01-04",
+    "specialist": "Dr. Lee",
+    "diagnosisCodes": ["Z57.1", "Z74.3", "M51.2"],
+    "employerName": "FBI",
+    "sickLeave": {
+        "startDate": "2019-08-05",
+        "endDate": "2019-08-28"
+    },
+    "country": "Finland"
+}
+
+### Hospital ✅
+### POST /:id/entries ✅
+POST {{api}}/d27736ec-f723-11e9-8f0b-362b9e155667/entries
+Content-Type: application/json
+Accept: application/json
+
+{
+    "type": "Hospital",
+    "description": "good",
+    "date": "2023-01-04",
+    "specialist": "Dr. Lee",
+    "diagnosisCodes": ["Z57.1", "Z74.3", "M51.2"],
+    "discharge": {
+        "date": "2015-01-16",
+        "criteria": "Thumb has healed."
+    }
+}
+
+### POST /:id/entries ✅
+POST {{api}}/d27736ec-f723-11e9-8f0b-362b9e155667/entries
+Content-Type: application/json
+Accept: application/json
+
+{
+    "type": "Hospital",
+    "description": "good",
+    "date": "2023-01-04",
+    "specialist": "Dr. Lee",
+    "diagnosisCodes": ["Z57.1", "Z74.3", "M51.2"]
+}
+
+### POST /:id/entries ✅
+POST {{api}}/d27736ec-f723-11e9-8f0b-362b9e155667/entries
+Content-Type: application/json
+Accept: application/json
+
+{
+    "type": "Hospital",
+    "description": "good",
+    "date": "2023-01-04",
+    "specialist": "Dr. Lee",
+    "diagnosisCodes": ["Z57.1", "Z74.3", "M51.2"],
+    "discharge": {
+        "date": "2015-01-16",
+        "criteria": "Thumb has healed."
+    },
+    "country": "Finland"
 }
 

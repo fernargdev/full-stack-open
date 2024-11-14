@@ -1,14 +1,15 @@
 import express, { Request, Response } from 'express';
 
 import {
-  // NewPatient,
   Patient,
   EntryWithoutId,
   NoSsnPatient,
   PatientFormValues,
   Entry,
 } from '../types';
+
 import patientsService from '../services/patientsService';
+
 import {
   errorMiddleware,
   newEntryParser,
@@ -18,7 +19,11 @@ import {
 const router = express.Router();
 
 // Patient
-router.get('/', (_req, res: Response<NoSsnPatient[]>) => {
+router.get('/', (_req: Request, res: Response<Patient[]>): void => {
+  res.json(patientsService.getAllPatient());
+});
+
+router.get('/no-ssn', (_req: Request, res: Response<NoSsnPatient[]>): void => {
   res.json(patientsService.getNoSsnPatients());
 });
 
@@ -27,7 +32,7 @@ router.get(
   (
     req: Request<{ id: string }, unknown, EntryWithoutId>,
     res: Response<Patient | string>,
-  ) => {
+  ): void => {
     const patient = patientsService.getPatientById(req.params.id);
 
     if (patient) {
@@ -44,20 +49,20 @@ router.post(
   (
     req: Request<unknown, unknown, PatientFormValues>,
     res: Response<Patient>,
-  ) => {
+  ): void => {
     const newPatient = patientsService.addPatient(req.body);
+
     res.status(201).json(newPatient);
   },
 );
 
-// Entry
 router.post(
   '/:id/entries',
   newEntryParser,
   (
     req: Request<{ id: string }, unknown, EntryWithoutId>,
     res: Response<Entry | string>,
-  ) => {
+  ): void => {
     const patient = patientsService.getPatientById(req.params.id);
 
     if (patient) {

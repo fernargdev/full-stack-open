@@ -17,8 +17,8 @@ Part updated 28th August 2024
 
 ## Modules
 
-a. [Background and introduction](https://fullstackopen.com/en/part9/background_and_introduction)  
-b. [First steps with TypeScript](https://fullstackopen.com/en/part9/first_steps_with_type_script)
-c. [Typing an Express app](https://fullstackopen.com/en/part9/typing_an_express_app)
-d. [React with types](https://fullstackopen.com/en/part9/react_with_types)
+a. [Background and introduction](https://fullstackopen.com/en/part9/background_and_introduction)   
+b. [First steps with TypeScript](https://fullstackopen.com/en/part9/first_steps_with_type_script)   
+c. [Typing an Express app](https://fullstackopen.com/en/part9/typing_an_express_app)   
+d. [React with types](https://fullstackopen.com/en/part9/react_with_types)   
 e. [Grande finale: Patientor](https://fullstackopen.com/en/part9/grande_finale_patientor)
